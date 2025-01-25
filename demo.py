@@ -10,7 +10,7 @@ SCREEN_HEIGHT = 600
 screen = pygame.display.set_mode((SCREEN_WIDTH, SCREEN_HEIGHT))
 
 # Background setup
-background = pygame.image.load('images/background.jpg').convert()
+background = pygame.image.load('images/background1.jpg').convert()
 background_width, background_height = background.get_size()
 bg_x = 0
 bg_y = 0
