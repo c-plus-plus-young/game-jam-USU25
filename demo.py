@@ -115,8 +115,9 @@ while run:
                 if not isTalking:
                     for entity in entityList.sprites():
                         if pygame.sprite.collide_rect(entity, player):  # Check if entity collides with player
-                            isTalking = True
-                            textItems = ["hello I am a frog", "blah blah blah", "i'm teleporting you now"]
+                            if entity != player:
+                                isTalking = True
+                                textItems = ["hello I am a frog", "blah blah blah", "i'm teleporting you now"]
                 else:
                     textItems = textItems[1:]
                     if len(textItems) == 0:
