@@ -7,6 +7,7 @@ from scene import Scene
 from Thinker import Thinker
 from Player import Player
 import random
+from effects import ThoughtBubble
 pygame.init()
 
 # font init
@@ -26,6 +27,12 @@ background_width, background_height = background.get_size()
 currentScene = Scene(background=background)
 backgrounds = ['images/background1.jpg','images/background2.jpg','images/background3.jpg','images/background4.jpg', 'images/background5.jpg']
 
+player = Player(SCREEN_WIDTH, SCREEN_HEIGHT)
+
+entityList = pygame.sprite.Group()
+entityList.add(player)
+
+effectsList = pygame.sprite.Group()
 
 #scenes set up
 scenes = []
@@ -37,6 +44,7 @@ def nextScene():
     saveScene()
     background = pygame.image.load(backgrounds[random.randint(0,4)]).convert()
     scene = Scene(background=background)
+    effectsList.empty()
     return scene
 
 def backScene(currentScene):
@@ -46,7 +54,7 @@ def backScene(currentScene):
         return currentScene
 
 clock = pygame.time.Clock()
-player = Player(SCREEN_WIDTH, SCREEN_HEIGHT)
+
 
 #player movement
 velocity = 5
@@ -59,8 +67,8 @@ animating = 0
 #map data:
 gameMap = (0, 0, 0)
 
-entityList = pygame.sprite.Group()
-entityList.add(player)
+
+
 
 #create the hub thinkers
 for i in range(4):
@@ -80,6 +88,9 @@ while run:
     entityList.update()
     entityList.draw(screen)
 
+    if len(effectsList) > 0:
+        effectsList.draw(screen)
+    effectsList.update()
     if (len(textItems) > 0):
         pygame.draw.rect(screen, (0, 255, 0), pygame.Rect(15, 510, 770, 80))
         text1 = font.render(textItems[0], True, (255, 255, 255))
@@ -116,6 +127,8 @@ while run:
                             if entity != player:
                                 entity.isTalking = True
                                 isTalking = True
+                                x,y = entity.getPosition()
+                                effectsList.add(ThoughtBubble(x,y))
                                 textItems = ["hello I am a frog", "blah blah blah", "i'm teleporting you now"]
                 else:
                     textItems = textItems[1:]
@@ -179,5 +192,10 @@ while run:
             x, y = entity.getPosition()
             entity.rect.center = (currentScene.x+x, currentScene.y+y)
 
+    for entity in effectsList.sprites():
+        x, y = entity.getPosition()
+        x = x - entity.rect.width/2
+        y = y - entity.rect.height/2
+        entity.rect.center = (currentScene.x+x, currentScene.y+y)
 
 pygame.quit()
