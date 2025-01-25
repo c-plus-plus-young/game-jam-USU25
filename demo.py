@@ -12,7 +12,7 @@ pygame.init()
 
 # font init
 pygame.font.init()
-font = pygame.font.Font("fonts/Modak-Regular.ttf", 30)
+font = pygame.font.Font("fonts/Modak-Regular.ttf", 25)
 textItems = []
 isTalking = False
 
@@ -40,18 +40,39 @@ def saveScene():
     scene = Scene(currentScene.x, currentScene.y, currentScene.background)
     scenes.append(scene)
 
+def fade_effect(fade_out=True):
+    fade_surface = pygame.Surface((SCREEN_WIDTH, SCREEN_HEIGHT))
+    fade_surface.fill((0, 0, 0))  # Black overlay
+
+    for alpha in range(0, 255, 10) if fade_out else range(255, -1, -10):
+        fade_surface.set_alpha(alpha)
+        screen.blit(currentScene.background, (currentScene.x, currentScene.y))  # Draw current background
+        entityList.update()
+        entityList.draw(screen)
+        if len(effectsList) > 0:
+            effectsList.draw(screen)
+        screen.blit(fade_surface, (0, 0))
+        pygame.display.update()
+        pygame.time.delay(30)
+
+
 def nextScene():
+    fade_effect(fade_out=True)
+    pygame.mixer_music.stop()
+    playMusic("music4.mp3")
+
     saveScene()
     background = pygame.image.load(backgrounds[random.randint(0,4)]).convert()
     scene = Scene(background=background)
     effectsList.empty()
     return scene
 
-def backScene():
-    return scenes.pop()
-
-
-
+def backScene(currentScene):
+    fade_effect(fade_out=True)
+    if len(scenes) > 0:
+        return scenes.pop()
+    else:
+        return currentScene
 
 
 clock = pygame.time.Clock()
@@ -62,7 +83,8 @@ velocity = 5
 north = south = east = west = False
 animating = 0
 
-
+#play music
+playMusic("music5.mp3")
 
 
 #map data:
@@ -94,12 +116,13 @@ while run:
         effectsList.draw(screen)
     effectsList.update()
     if (len(textItems) > 0):
-        pygame.draw.rect(screen, (0, 255, 0), pygame.Rect(15, 510, 770, 80))
-        text1 = font.render(textItems[0], True, (255, 255, 255))
-        screen.blit(text1, (25, 515))
+        screen.blit(pygame.image.load("images/textContainer.jpeg").convert(), (15, 510))
+        # pygame.draw.rect(screen, (0, 255, 0), pygame.Rect(15, 510, 770, 80))
+        text1 = font.render(textItems[0], True, (0, 0, 0))
+        screen.blit(text1, (40, 514))
     if (len(textItems) > 1):
-        text2 = font.render(textItems[1], True, (255, 255, 255))
-        screen.blit(text2, (25, 550))
+        text2 = font.render(textItems[1], True, (0, 0, 0))
+        screen.blit(text2, (40, 540))
 
 
 
@@ -146,6 +169,7 @@ while run:
                         isTalking = False
                         pygame.time.delay(10000)
                         currentScene = nextScene()
+                        playSound("flowbubble.wav")
                         background_width, background_height = currentScene.background.get_size()
 
         elif event.type == pygame.KEYUP:
@@ -159,7 +183,8 @@ while run:
             if event.key == pygame.K_d:
                 east = False
             if event.key == pygame.K_b:
-                currentScene = backScene()
+                currentScene = backScene(currentScene)
+                playSound("bubblepop.mp3")
             if event.key == pygame.K_n:
                 currentScene = nextScene()
 
@@ -170,25 +195,25 @@ while run:
         player.north = True
     else:
         player.north = False
-        
+
     if south and currentScene.y > -(background_height - SCREEN_HEIGHT + 250):  # prevent scrolling past the bottom edge
         currentScene.y -= velocity
         player.south = True
     else:
         player.south = False
-        
+
     if east and currentScene.x > -(background_width - SCREEN_WIDTH + 350):
         currentScene.x -= velocity
         player.east = True
     else:
         player.east = False
-        
+
     if west and currentScene.x < 350:
         currentScene.x += velocity
         player.west = True
     else:
         player.west = False
-    
+
 
     # update the display
     pygame.display.flip()
