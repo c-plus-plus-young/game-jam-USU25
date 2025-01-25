@@ -13,20 +13,27 @@ screen = pygame.display.set_mode((SCREEN_WIDTH, SCREEN_HEIGHT))
 # must create character outside of loop
 class Player(pygame.sprite.Sprite):
     def __init__(self):
+        pygame.sprite.Sprite.__init__(self)
+        self.images = []
+        for i in range(4):
+            img = pygame.image.load(r'images/image' + str(i) + '.png').convert()
+            self.images.append(img)
+            self.image = self.images[i]
+            self.rect = self.image.get_rect()
+
         self.player = pygame.Rect((200, 250, 50, 50))
-        self.color = "white"
+        # self.color = "white"
 
     def move(self, x_speed, y_speed):
-        self.player.move_ip((x_speed, y_speed))
-
-    def change_color(self, color):
-        self.color = color
-
-    def draw(self, game_screen):
-        pygame.draw.rect(game_screen, self.color, self.player)
+        self.rect.move_ip((x_speed, y_speed))
 
 clock = pygame.time.Clock()
 player = Player()
+player.rect.x = 0  # go to x
+player.rect.y = 0  # go to y
+player_list = pygame.sprite.Group()
+player_list.add(player)
+
 north = False
 south = False
 east = False
@@ -37,12 +44,10 @@ yVelocity = 2
 # loop
 run = True
 while run:
-
     screen.fill((0, 0, 0))
 
-    player.draw(screen)
-
-
+    player_list.draw(screen)
+    pygame.display.flip()
 
     # event handler
     for event in pygame.event.get():
@@ -68,13 +73,17 @@ while run:
                 east = False
 
     if north:
-        player.move(0, -yVelocity)    
+        player.move(0, -yVelocity)
+        player.image = player.images[3]
     if south:
-        player.move(0, yVelocity)        
+        player.move(0, yVelocity)
+        player.image = player.images[0]
     if east:
-        player.move(xVelocity, 0)        
+        player.move(xVelocity, 0)
+        player.image = player.images[2]
     if west:
-        player.move(-xVelocity, 0)        
+        player.move(-xVelocity, 0)
+        player.image = player.images[1]
 
     
 
