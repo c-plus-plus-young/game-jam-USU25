@@ -8,6 +8,10 @@ class Thinker(pygame.sprite.Sprite):
         self.isTalking = False
         self.idleImages = []
         self.talkingImages = []
+        self.animationSpeed = 15
+        self.frameCounter = 0
+        self.currentFrame = 0
+
 
         # Add talking sprites and idle sprites to NPC
         for i in range(1, 3):
@@ -27,3 +31,21 @@ class Thinker(pygame.sprite.Sprite):
 
     def getPosition(self):
         return self.x, self.y
+    
+    #got a little bitty help from chat gpt on this one. 
+    def update(self):
+        # Increment the frame counter
+        self.frameCounter += 1
+        # Switch frames based on the animation speed
+        if self.frameCounter >= self.animationSpeed:
+            self.frameCounter = 0
+            self.currentFrame += 1
+            self.frameCounter += 1  # Move to the next frame
+            
+            # Reset to the first frame if we've gone past the last frame
+            if self.currentFrame >= len(self.idleImages):
+                self.currentFrame = 0
+            
+            # Update the image to the new frame
+            self.image = self.idleImages[self.currentFrame]
+            self.rect = self.image.get_rect(center=self.rect.center)  # Keep the sprite's position centered
