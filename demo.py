@@ -75,6 +75,7 @@ gameMap = (0, 0, 0)
 for i in range(4):
     entityList.add(Thinker(background_width, background_height))
 
+
 # Main loop=======================================================
 run = True
 
@@ -127,16 +128,23 @@ while run:
                         if pygame.sprite.collide_rect(entity, player):  # Check if entity collides with player
                             if entity != player:
                                 entity.isTalking = True
+                                entity.isThinking = True
                                 isTalking = True
-                                x,y = entity.getPosition()
-                                effectsList.add(ThoughtBubble(x,y))
+                                # x,y = entity.getPosition()
+                                # effectsList.add(ThoughtBubble(x,y))
                                 textItems = ["hello I am a frog", "blah blah blah", "i'm teleporting you now"]
                 else:
                     textItems = textItems[1:]
                     if len(textItems) == 0:
                         for entity in entityList.sprites():
                             entity.isTalking = False
+                            if entity != player:
+                                if entity.isThinking:
+                                    x, y = entity.getPosition()
+                                    effectsList.add(ThoughtBubble(x, y))
+                                    entity.isThinking = False
                         isTalking = False
+                        pygame.time.delay(10000)
                         currentScene = nextScene()
                         background_width, background_height = currentScene.background.get_size()
 

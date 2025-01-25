@@ -6,13 +6,19 @@ class ThoughtBubble(pygame.sprite.Sprite):
           self.x = x
           self.y = y
           self.frames = []
-          self.animationSpeed = 15
+          self.loopFrames = []
+          self.animationSpeed = 50
           self.frameCounter = 0
           self.currentFrame = 0
-          for i in range(1, 6):
+          self.looping = False
+          for i in range(1, 5):
                img = pygame.image.load(r'images/thought' + str(i) + '.png').convert_alpha()
-               img = pygame.transform.scale(img, (100, 100))
+               img = pygame.transform.scale(img, (150, 150))
                self.frames.append(img)
+          for i in range(5, 7):
+               img = pygame.image.load(r'images/thought' + str(i) + '.png').convert_alpha()
+               img = pygame.transform.scale(img, (150, 150))
+               self.loopFrames.append(img)
        
           self.image = self.frames[0]
           self.rect = self.image.get_rect(center=(self.x, self.y))
@@ -32,9 +38,14 @@ class ThoughtBubble(pygame.sprite.Sprite):
                self.frameCounter += 1  # Move to the next frame
             
             # Reset to the first frame if we've gone past the last frame
-               if self.currentFrame >= len(self.frames):
+               if self.currentFrame >= len(self.frames) and not self.looping:
                     self.currentFrame = 0
-          
-          
-               self.image = self.frames[self.currentFrame]
+               if self.currentFrame >= len(self.loopFrames) and self.looping:
+                    self.currentFrame = 0
+
+               if self.looping:
+                    self.image = self.loopFrames[self.currentFrame]
+               else:
+                    self.image = self.frames[self.currentFrame]
+                    self.looping = True
                self.rect = self.image.get_rect(center=self.rect.center)  # Keep the sprite's position centered
