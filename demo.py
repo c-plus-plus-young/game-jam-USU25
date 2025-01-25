@@ -24,7 +24,7 @@ screen = pygame.display.set_mode((SCREEN_WIDTH, SCREEN_HEIGHT))
 background = pygame.image.load('images/hubBG.png').convert()
 background_width, background_height = background.get_size()
 currentScene = Scene(background=background)
-backgrounds = ['images/bedroomBG.png', 'images/bedroomBG.png','images/background2.jpg','images/background3.jpg','images/background4.jpg', 'images/background5.jpg']
+backgrounds = ['images/bedroomBG.png','images/background2.jpg','images/background3.jpg','images/background4.jpg', 'images/background5.jpg']
 
 player = Player(SCREEN_WIDTH, SCREEN_HEIGHT)
 
@@ -96,7 +96,7 @@ gameMap = (0, 0, 0)
 
 #create the hub thinkers
 for i in range(4):
-    entityList.add(Thinker(i + 1, background_width, background_height))
+    entityList.add(Thinker(i, background_width, background_height))
     for entity in entityList:
         if entity != player:
             print(entity.backgroundNum)
