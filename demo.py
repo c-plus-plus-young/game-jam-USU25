@@ -24,7 +24,7 @@ screen = pygame.display.set_mode((SCREEN_WIDTH, SCREEN_HEIGHT))
 background = pygame.image.load('images/hubBG.png').convert()
 background_width, background_height = background.get_size()
 currentScene = Scene(background=background)
-backgrounds = ['images/bedroomBG.png','images/background2.jpg','images/background3.jpg','images/background4.jpg', 'images/background5.jpg']
+backgrounds = ['images/bedroomBG.png', 'images/bedroomBG.png','images/background2.jpg','images/background3.jpg','images/background4.jpg', 'images/background5.jpg']
 
 player = Player(SCREEN_WIDTH, SCREEN_HEIGHT)
 
@@ -61,7 +61,7 @@ def nextScene():
     playMusic("music4.mp3")
 
     saveScene()
-    background = pygame.image.load(backgrounds[random.randint(0,4)]).convert()
+    background = pygame.image.load(backgrounds[currentWorld]).convert()
     scene = Scene(background=background)
     effectsList.empty()
     return scene
@@ -96,7 +96,10 @@ gameMap = (0, 0, 0)
 
 #create the hub thinkers
 for i in range(4):
-    entityList.add(Thinker(background_width, background_height))
+    entityList.add(Thinker(i + 1, background_width, background_height))
+    for entity in entityList:
+        if entity != player:
+            print(entity.backgroundNum)
 bubbleCounter = -60
 timer = 6000
 currentWorld = 0
@@ -116,7 +119,7 @@ while run:
     entityList.draw(screen)
 
     timer -= 1
-    if currentWorld != 2:
+    if currentWorld != 0:
         time = font.render(str(timer / 60)[0:4], True, (0, 0, 0))
         screen.blit(time, (15, 15))
 
@@ -166,6 +169,7 @@ while run:
                                 isTalking = True
                                 # x,y = entity.getPosition()
                                 # effectsList.add(ThoughtBubble(x,y))
+                                currentWorld = entity.backgroundNum
                                 textItems = ["hello I am a frog", "blah blah blah", "i'm teleporting you now"]
                 else:
                     textItems = textItems[1:]

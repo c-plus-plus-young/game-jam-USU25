@@ -3,7 +3,7 @@ import random
 
 # Thinker class
 class Thinker(pygame.sprite.Sprite):
-    def __init__(self, backgroundWidth = 50, backgroundHeight = 50):
+    def __init__(self, backgroundNum, backgroundWidth = 50, backgroundHeight = 50):
         pygame.sprite.Sprite.__init__(self)
         self.isTalking = False
         self.isThinking = False
@@ -12,6 +12,7 @@ class Thinker(pygame.sprite.Sprite):
         self.animationSpeed = 15
         self.frameCounter = 0
         self.currentFrame = 0
+        self.backgroundNum = backgroundNum
 
 
         # Add talking sprites and idle sprites to NPC
