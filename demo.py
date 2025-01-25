@@ -85,9 +85,9 @@ west = False
 velocity = 1
 
 #Custom Events
-MAP_EVENT = pygame.USEREVENT + 1
-map_data_red = { "mapData" : (255,0,0)}
-mapChangeRed = pygame.event.Event(MAP_EVENT, **map_data_red)
+SCENE_CHANGE_EVENT = pygame.USEREVENT + 1
+sceneData = { "scene" : nextScene()}
+sceneChange = pygame.event.Event(SCENE_CHANGE_EVENT, **sceneData)
 
 
 #map data:
@@ -129,17 +129,15 @@ while run:
 
         #Player Movement:
         elif event.type == pygame.KEYDOWN:
+            if event.key == pygame.K_SPACE and pygame.sprite.collide_rect(thinker, player):
+                currentScene = nextScene()
             if event.key == pygame.K_w:
-                
                 north = True
             if event.key == pygame.K_s:
-                
                 south = True
             if event.key == pygame.K_a:
-                
                 west = True
             if event.key == pygame.K_d:
-            
                 east = True
         elif event.type == pygame.KEYUP:
         
@@ -156,14 +154,14 @@ while run:
             if event.key == pygame.K_n:
                 currentScene = nextScene()
 
-        elif event.type == MAP_EVENT:
+        elif event.type == SCENE_CHANGE_EVENT:
             gameMap = event.mapData
 
     # background scrolling logic
     if north and currentScene.y < 0:
         currentScene.y += yVelocity
         player.image = player.images[3]
-    if south and currentScene.y > -(background_height - SCREEN_HEIGHT):  # prevent scrolling past the bottom edge
+    if south and currentScene.y > -(background_height- SCREEN_HEIGHT):  # prevent scrolling past the bottom edge
         currentScene.y -= yVelocity
         player.image = player.images[0]
     if east and currentScene.x > -(background_width - SCREEN_WIDTH):
@@ -188,4 +186,4 @@ pygame.quit()
 
 
 
-#
+
