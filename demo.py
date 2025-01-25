@@ -1,5 +1,5 @@
 import pygame
-from text import printText
+from text import printText, advanceableText
 from music import playMusic
 
 pygame.init()
