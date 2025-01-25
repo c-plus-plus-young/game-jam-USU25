@@ -1,5 +1,3 @@
-
-
 import pygame
 from music import playMusic, playSound
 from scene import Scene
@@ -64,16 +62,22 @@ def nextScene():
     background = pygame.image.load(backgrounds[futureWorld]).convert()
     scene = Scene(background=background)
     effectsList.empty()
+    entityList.empty()
+    entityList.add(player)
     return scene
 
 def backScene(currentScene):
     fade_effect(fade_out=True)
+    entityList.empty()
     if len(scenes) > 0:
         if len(scenes) == 1:
             playMusic("music5.mp3")
-        return scenes.pop()
-    else:
-        return currentScene
+        currentScene = scenes.pop()
+    background_width, background_height = currentScene.background.get_size()
+    for i in range(3):
+        entityList.add(Thinker(i, thinkerList[i], background_width, background_height))
+    entityList.add(player)
+    return currentScene
 
 
 clock = pygame.time.Clock()
@@ -100,7 +104,7 @@ for i in range(3):
     entityList.add(Thinker(i, thinkerList[i], background_width, background_height))
 
 bubbleCounter = -60
-timer = 6000
+timer = 300
 futureWorld = -1
 currentWorld = -1
 
@@ -124,6 +128,11 @@ while run:
         screen.blit(pygame.image.load("images/textContainer.jpeg").convert(), (15, 10))
         time = font.render(str(timer / 60)[0:4], True, (0, 0, 0))
         screen.blit(time, (15, 15))
+        if timer < 0 and timer > -60:
+            currentWorld = -1
+            currentScene = backScene(currentScene)
+            timer = 300
+            playSound("bubblepop.mp3")
 
     bubbleCounter -= 1
     if bubbleCounter == 0:
@@ -200,6 +209,8 @@ while run:
             if event.key == pygame.K_d:
                 east = False
             if event.key == pygame.K_b:
+                currentWorld = -1
+                timer = 300
                 currentWorld = -1
                 currentScene = backScene(currentScene)
                 playSound("bubblepop.mp3")
