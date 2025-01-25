@@ -99,8 +99,9 @@ while run:
 
         #Player Movement:
         elif event.type == pygame.KEYDOWN:
-            if event.key == pygame.K_SPACE and pygame.sprite.collide_rect(entityList.sprites(), player):
-                print("heu")
+            for entity in entityList.sprites():
+                if pygame.sprite.collide_rect(entity, player):  # Check if entity collides with player
+                    print("heu")
 
                 # currentScene = nextScene()
             if event.key == pygame.K_w:
