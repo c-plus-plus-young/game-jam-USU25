@@ -9,12 +9,29 @@ import random
 class Player(pygame.sprite.Sprite):
     def __init__(self):
         pygame.sprite.Sprite.__init__(self)
-        self.images = []
-        for i in range(4):
-            img = pygame.image.load(r'images/image' + str(i) + '.png').convert_alpha()
-            img = pygame.transform.scale(img, (50, 50))  # Resize player image to 50x50
-            self.images.append(img)
-        self.image = self.images[0]
+        self.northImages = []
+        self.southImages = []
+        self.eastImages = []
+        self.westImages = []
+
+        # Add images to North, South, East and West sprite sheets
+        for i in range(1, 3):
+            img = pygame.image.load(r'images/wizard' + str(i) + '.png').convert_alpha()
+            img = pygame.transform.scale(img, (100, 100))
+            self.southImages.append(img)
+        for i in range(3, 5):
+            img = pygame.image.load(r'images/wizard' + str(i) + '.png').convert_alpha()
+            img = pygame.transform.scale(img, (100, 100))
+            self.eastImages.append(img)
+        for i in range(5, 7):
+            img = pygame.image.load(r'images/wizard' + str(i) + '.png').convert_alpha()
+            img = pygame.transform.scale(img, (100, 100))
+            self.westImages.append(img)
+        for i in range(7, 9):
+            img = pygame.image.load(r'images/wizard' + str(i) + '.png').convert_alpha()
+            img = pygame.transform.scale(img, (100, 100))
+            self.northImages.append(img)
+        self.image = self.northImages[0]
         self.rect = self.image.get_rect(center=(SCREEN_WIDTH // 2, SCREEN_HEIGHT // 2))  # Center player on screen
 
     def move(self, x_speed, y_speed):
@@ -103,6 +120,7 @@ entityList.add(thinker)
 north = south = east = west = False
 xVelocity = 10
 yVelocity = 10
+animating = 0
 
 # Main loop=======================================================
 run = True
@@ -157,23 +175,27 @@ while run:
         elif event.type == SCENE_CHANGE_EVENT:
             gameMap = event.mapData
 
+    if animating // 10 >= len(player.northImages):
+        animating = 0
+
     # background scrolling logic
     if north and currentScene.y < 0:
         currentScene.y += yVelocity
-        player.image = player.images[3]
-    if south and currentScene.y > -(background_height- SCREEN_HEIGHT):  # prevent scrolling past the bottom edge
+        player.image = player.northImages[animating // 10]
+    if south and currentScene.y > -(background_height - SCREEN_HEIGHT):  # prevent scrolling past the bottom edge
         currentScene.y -= yVelocity
-        player.image = player.images[0]
+        player.image = player.southImages[animating // 10]
     if east and currentScene.x > -(background_width - SCREEN_WIDTH):
         currentScene.x -= xVelocity
-        player.image = player.images[2]
+        player.image = player.eastImages[animating // 10]
     if west and currentScene.x < 0:
         currentScene.x += xVelocity
-        player.image = player.images[1]
+        player.image = player.westImages[animating // 10]
 
     # update the display
     pygame.display.flip()
     clock.tick(60)
+    animating = animating + 1
 
     #Update entity positions
     for entity in entityList.sprites():
