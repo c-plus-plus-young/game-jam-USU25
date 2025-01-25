@@ -118,6 +118,7 @@ currentWorld = -1
 collectedPail = False
 collectedSoap = False
 collectedDuckie = False
+winTimer = -60
 
 # Main loop=======================================================
 run = True
@@ -133,13 +134,16 @@ while run:
     entityList.update()
     entityList.draw(screen)
 
+    if winTimer <= 0 and winTimer >= -30:
+        run = False
+
     if collectedDuckie and collectedPail and collectedSoap:
         screen.blit(pygame.image.load("images/textContainer.jpeg").convert(), (15, 510))
         text3 = font.render("GAME WON", True, (0, 0, 0))
         screen.blit(text3, (40, 514))
-        time.sleep(1)
-        print("Game Won")
-        run = False
+        winTimer == 10
+
+
 
     timer -= 1
     if currentWorld > 0:
