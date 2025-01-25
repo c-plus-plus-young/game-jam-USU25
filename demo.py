@@ -1,3 +1,5 @@
+from idlelib.macosx import isCocoaTk
+
 import pygame
 from text import advanceableText
 from music import playMusic, playSound
@@ -11,6 +13,7 @@ pygame.init()
 pygame.font.init()
 font = pygame.font.Font("fonts/Modak-Regular.ttf", 30)
 textItems = []
+isTalking = False
 
 # window dimensions
 SCREEN_WIDTH = 800
@@ -99,11 +102,7 @@ while run:
 
         #Player Movement:
         elif event.type == pygame.KEYDOWN:
-            for entity in entityList.sprites():
-                if pygame.sprite.collide_rect(entity, player):  # Check if entity collides with player
-                    print("heu")
 
-                # currentScene = nextScene()
             if event.key == pygame.K_w:
                 north = True
             if event.key == pygame.K_s:
@@ -112,11 +111,18 @@ while run:
                 west = True
             if event.key == pygame.K_d:
                 east = True
-            if event.key == pygame.K_k:
-                textItems = ["word1", "word2", "word3"]
             if event.key == pygame.K_SPACE:
-                textItems = textItems[1:]
-                print(textItems)
+                if not isTalking:
+                    for entity in entityList.sprites():
+                        if pygame.sprite.collide_rect(entity, player):  # Check if entity collides with player
+                            isTalking = True
+                            textItems = ["hello I am a frog", "blah blah blah", "i'm teleporting you now"]
+                else:
+                    textItems = textItems[1:]
+                    if len(textItems) == 0:
+                        isTalking = False
+                        currentScene = nextScene()
+
         elif event.type == pygame.KEYUP:
 
             if event.key == pygame.K_w:
