@@ -1,5 +1,5 @@
 import pygame
-from text import printText
+from text import advanceableText
 from music import playMusic
 from scene import Scene
 import random
@@ -104,7 +104,6 @@ run = True
 
 while run:
 
-
     screen.fill(gameMap)
 
     # background
@@ -121,8 +120,6 @@ while run:
 
         elif event.type == pygame.USEREVENT:
             screen.fill((100, 100, 100))
-
-
 
         #Player Movement:
         elif event.type == pygame.KEYDOWN:
