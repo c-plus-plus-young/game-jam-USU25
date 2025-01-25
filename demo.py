@@ -17,6 +17,7 @@ class Player(pygame.sprite.Sprite):
         self.images = []
         for i in range(4):
             img = pygame.image.load(r'images/image' + str(i) + '.png').convert()
+            img = pygame.transform.scale(img, (150,150))
             self.images.append(img)
             self.image = self.images[i]
             self.rect = self.image.get_rect()
@@ -73,16 +74,20 @@ while run:
                 east = False
 
     if north:
-        player.move(0, -yVelocity)
+        if player.rect.y > 0:
+            player.move(0, -yVelocity)
         player.image = player.images[3]
     if south:
-        player.move(0, yVelocity)
+        if player.rect.y < SCREEN_HEIGHT - 150:
+            player.move(0, yVelocity)
         player.image = player.images[0]
     if east:
-        player.move(xVelocity, 0)
+        if player.rect.x < SCREEN_WIDTH - 150:
+            player.move(xVelocity, 0)
         player.image = player.images[2]
     if west:
-        player.move(-xVelocity, 0)
+        if player.rect.x > 0:
+            player.move(-xVelocity, 0)
         player.image = player.images[1]
 
     
