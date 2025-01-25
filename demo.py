@@ -59,7 +59,6 @@ for i in range(4):
     thinker = Thinker(background_width, background_height)
     entityList.add(thinker)
 
-
 # Main loop=======================================================
 run = True
 
@@ -74,6 +73,7 @@ while run:
     entityList.update()
     entityList.draw(screen)
 
+    # Handle animation
     if animating // 15 >= len(player.northImages):
         animating = 0
 
@@ -142,6 +142,5 @@ while run:
         if isinstance(entity, Thinker):
             x, y = entity.getPosition()
             entity.rect.center = (currentScene.x+x, currentScene.y+y)
-
 
 pygame.quit()
