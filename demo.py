@@ -5,7 +5,6 @@ from scene import Scene
 from Thinker import Thinker
 from Player import Player
 import random
-
 pygame.init()
 
 # window dimensions
@@ -75,6 +74,11 @@ while run:
     entityList.update()
     entityList.draw(screen)
 
+    if animating // 15 >= len(player.northImages):
+        animating = 0
+
+    thinker.image = thinker.idleImages[animating // 15]
+
     # event handling
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
@@ -86,6 +90,9 @@ while run:
         #Player Movement:
         elif event.type == pygame.KEYDOWN:
             if event.key == pygame.K_SPACE and pygame.sprite.collide_rect(thinker, player):
+                thinker.image = thinker.talkingImages[animating // 15]
+                frogText = ["hello I am a frog", "blah blah blah", "i'm teleporting you now"]
+                advanceableText(frogText, screen)
                 currentScene = nextScene()
             if event.key == pygame.K_w:
                 north = True
@@ -111,22 +118,19 @@ while run:
                 currentScene = nextScene()
 
 
-    if animating // 10 >= len(player.northImages):
-        animating = 0
-
     # background scrolling logic
-    if north and currentScene.y < 250:
+    if north and currentScene.y < 0:
         currentScene.y += velocity
-        player.image = player.northImages[animating // 10]
-    if south and currentScene.y > -(background_height - SCREEN_HEIGHT + 250):  # prevent scrolling past the bottom edge
+        player.image = player.northImages[animating // 15]
+    if south and currentScene.y > -(background_height - SCREEN_HEIGHT):  # prevent scrolling past the bottom edge
         currentScene.y -= velocity
-        player.image = player.southImages[animating // 10]
-    if east and currentScene.x > -(background_width - SCREEN_WIDTH + 350):
+        player.image = player.southImages[animating // 15]
+    if east and currentScene.x > -(background_width - SCREEN_WIDTH):
         currentScene.x -= velocity
-        player.image = player.eastImages[animating // 10]
-    if west and currentScene.x < 350:
+        player.image = player.eastImages[animating // 15]
+    if west and currentScene.x < 0:
         currentScene.x += velocity
-        player.image = player.westImages[animating // 10]
+        player.image = player.westImages[animating // 15]
 
     # update the display
     pygame.display.flip()
@@ -141,7 +145,3 @@ while run:
 
 
 pygame.quit()
-
-
-
-
