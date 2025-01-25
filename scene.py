@@ -36,7 +36,7 @@ class PlayerPos(Entity):
      def getHeight(self):
           return self.height
      
-class PersonPos(Entity):
+class ThinkerPos(Entity):
      def __init__(self, x = 100, y = 100, width = 50, height = 50):
           self.x = x
           self.y = y
@@ -61,6 +61,21 @@ class PersonPos(Entity):
 #background
 #positions
 class Scene:
-     def __init__(self, background = "images/water.png", objects: List[Entity] = None):
+     def __init__(self, x = 0, y = 0, background = "images/background1.jpg", objects: List[Entity] = None):
+          self.x = x
+          self.y = y
           self.background = background
           self.objects = objects
+     
+     def setX(self, x):
+          self.x = x
+     def setY(self, y):
+          self.y = y
+     def getX(self):
+          return self.x
+     def getY(self):
+          return self.y
+     def getWidth(self):
+          return self.width
+     def getHeight(self):
+          return self.height
