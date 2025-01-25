@@ -34,23 +34,18 @@ def backScene():
     return scenes.pop()
 
 
-thinker = Thinker(background_width, background_height)
+
 
 
 clock = pygame.time.Clock()
 player = Player(SCREEN_WIDTH, SCREEN_HEIGHT)
 
 #player movement
-north = False
-south = False
-east = False
-west = False
-velocity = 1
+velocity = 10
+north = south = east = west = False
+animating = 0
 
-#Custom Events
-SCENE_CHANGE_EVENT = pygame.USEREVENT + 1
-sceneData = { "scene" : nextScene()}
-sceneChange = pygame.event.Event(SCENE_CHANGE_EVENT, **sceneData)
+
 
 
 #map data:
@@ -58,13 +53,12 @@ gameMap = (0, 0, 0)
 
 entityList = pygame.sprite.Group()
 entityList.add(player)
-entityList.add(thinker)
 
-# Movement
-north = south = east = west = False
-xVelocity = 10
-yVelocity = 10
-animating = 0
+#create the hub thinkers
+for i in range(4):
+    thinker = Thinker(background_width, background_height)
+    entityList.add(thinker)
+
 
 # Main loop=======================================================
 run = True
@@ -123,21 +117,19 @@ while run:
             if event.key == pygame.K_n:
                 currentScene = nextScene()
 
-        elif event.type == SCENE_CHANGE_EVENT:
-            gameMap = event.mapData
 
     # background scrolling logic
     if north and currentScene.y < 0:
-        currentScene.y += yVelocity
+        currentScene.y += velocity
         player.image = player.northImages[animating // 15]
     if south and currentScene.y > -(background_height - SCREEN_HEIGHT):  # prevent scrolling past the bottom edge
-        currentScene.y -= yVelocity
+        currentScene.y -= velocity
         player.image = player.southImages[animating // 15]
     if east and currentScene.x > -(background_width - SCREEN_WIDTH):
-        currentScene.x -= xVelocity
+        currentScene.x -= velocity
         player.image = player.eastImages[animating // 15]
     if west and currentScene.x < 0:
-        currentScene.x += xVelocity
+        currentScene.x += velocity
         player.image = player.westImages[animating // 15]
 
     # update the display
