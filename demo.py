@@ -98,9 +98,7 @@ gameMap = (0, 0, 0)
 thinkerList = ["frog", "rat", "plant"]
 for i in range(3):
     entityList.add(Thinker(i, thinkerList[i], background_width, background_height))
-    for entity in entityList:
-        if entity != player:
-            print(entity.backgroundNum)
+
 bubbleCounter = -60
 timer = 6000
 futureWorld = -1
@@ -126,7 +124,6 @@ while run:
         screen.blit(pygame.image.load("images/textContainer.jpeg").convert(), (15, 10))
         time = font.render(str(timer / 60)[0:4], True, (0, 0, 0))
         screen.blit(time, (15, 15))
-        print(currentWorld)
 
     bubbleCounter -= 1
     if bubbleCounter == 0:
@@ -203,6 +200,7 @@ while run:
             if event.key == pygame.K_d:
                 east = False
             if event.key == pygame.K_b:
+                currentWorld = -1
                 currentScene = backScene(currentScene)
                 playSound("bubblepop.mp3")
             if event.key == pygame.K_n:
