@@ -54,8 +54,7 @@ will depend upon specific characters used
 def advanceableText(messages, screen):
     # may cause issues if character is moving when text starts
     # (character will glide when text finishes)
-    # newMessage = messages.pop(0)
-    # printText(newMessage, 515, screen)
+    size = len(messages)
     pygame.draw.rect(screen, green, pygame.Rect(15, 510, 770, 80))
     newMessage = messages.pop(0)
     printText(newMessage, 515, screen)
@@ -63,8 +62,10 @@ def advanceableText(messages, screen):
         oldMessage = newMessage
         newMessage = messages.pop(0)
         printTwoLines(oldMessage, newMessage, screen)
-    pygame.draw.rect(screen, green, pygame.Rect(15, 510, 770, 80))
-    printText(newMessage, 515, screen)
+    # necessary as screen prints again if only one message
+    if (size > 1):
+        pygame.draw.rect(screen, green, pygame.Rect(15, 510, 770, 80))
+        printText(newMessage, 515, screen)
 
 
 if __name__ == '__main__':
