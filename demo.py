@@ -1,6 +1,7 @@
 import pygame
 from text import printText
 from music import playMusic
+from scene import Scene
 
 pygame.init()
 
@@ -14,6 +15,17 @@ background = pygame.image.load('images/background.jpg').convert()
 background_width, background_height = background.get_size()
 bg_x = 0
 bg_y = 0
+
+#scenes set up
+scenes = []
+def saveScene():
+    scene = Scene(bg_x, bg_y, background)
+    scenes.append(scene)
+def newScene():
+    pass
+def pullScene():
+    pass
+
 
 
 # Player class
@@ -49,19 +61,6 @@ map_data_red = { "mapData" : (255,0,0)}
 mapChangeRed = pygame.event.Event(MAP_EVENT, **map_data_red)
 
 
-map_data_blue = { "mapData" : (0,0,255)}
-mapChangeBlue = pygame.event.Event(MAP_EVENT, **map_data_blue)
-
-
-map_data_green = { "mapData" : (0,255,0)}
-mapChangeGreen = pygame.event.Event(MAP_EVENT, **map_data_green)
-
-map_data_yellow = { "mapData" : (255,255,0)}
-mapChangeYellow = pygame.event.Event(MAP_EVENT, **map_data_yellow)
-
-map_data_black = { "mapData" : (0,0,0)}
-mapChangeBlack = pygame.event.Event(MAP_EVENT, **map_data_black)
-
 #map data:
 gameMap = (0, 0, 0)
 
@@ -73,7 +72,7 @@ north = south = east = west = False
 xVelocity = 10
 yVelocity = 10
 
-# Main loop
+# Main loop=======================================================
 run = True
 
 while run:

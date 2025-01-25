@@ -61,6 +61,8 @@ class PersonPos(Entity):
 #background
 #positions
 class Scene:
-     def __init__(self, background = "images/water.png", objects: List[Entity] = None):
+     def __init__(self, x = 0, y = 0, background = "images/background.jpg", objects: List[Entity] = None):
+          self.x = x
+          self.y = y
           self.background = background
           self.objects = objects
