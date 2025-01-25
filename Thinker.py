@@ -9,46 +9,76 @@ class Thinker(pygame.sprite.Sprite):
         self.isThinking = False
         self.idleImages = []
         self.talkingImages = []
-        self.animationSpeed = 15
+        self.animationSpeed = 17
         self.frameCounter = 0
         self.currentFrame = 0
         self.backgroundNum = backgroundNum
+        self.dialogue = []
 
-
-        # Add talking sprites and idle sprites to NPC
+        # Frog NPC
         if type == "frog":
+            # Set initial position of NPC
+            self.x = 140
+            self.y = 200
+
+            # Add talking sprites and idle sprites to NPC
             for i in range(1, 3):
                 img = pygame.image.load(r'images/frog' + str(i) + '.png').convert_alpha()
-                img = pygame.transform.scale(img, (100, 100))
+                img = pygame.transform.scale(img, (130, 130))
                 self.idleImages.append(img)
             for i in range(2, 4):
                 img = pygame.image.load(r'images/frog' + str(i) + '.png').convert_alpha()
-                img = pygame.transform.scale(img, (100, 100))
+                img = pygame.transform.scale(img, (130, 130))
                 self.talkingImages.append(img)
-        elif type == "rat":
-            for i in range(1, 3):
-                img = pygame.image.load(r'images/rat' + str(i) + '.png').convert_alpha()
-                img = pygame.transform.scale(img, (150, 150))
-                self.idleImages.append(img)
-            for i in range(1, 3):
-                img = pygame.image.load(r'images/rat' + str(i) + '.png').convert_alpha()
-                img = pygame.transform.scale(img, (150, 150))
-                self.talkingImages.append(img)
-        elif type == "plant":
-            for i in range(1, 3):
-                img = pygame.image.load(r'images/plant' + str(i) + '.png').convert_alpha()
-                img = pygame.transform.scale(img, (150, 150))
-                self.idleImages.append(img)
-            for i in range(1, 3):
-                img = pygame.image.load(r'images/plant' + str(i) + '.png').convert_alpha()
-                img = pygame.transform.scale(img, (150, 150))
-                self.talkingImages.append(img)
-        self.image = self.idleImages[0]
 
-        # Set initial position of NPC
-        self.x = random.randint(0 + 30, backgroundWidth - 30)
-        self.y = random.randint(0 + 30, backgroundHeight - 30)
+            # Create dialogue for NPC
+            self.dialogue = ["Hello I am a frog", "Ribbit", "Silly frog thing"]
+
+        # Rat NPC
+        elif type == "rat":
+            # Set initial position of NPC
+            self.x = 490
+            self.y = 200
+
+            # Add talking sprites and idle sprites to NPC
+            for i in range(1, 3):
+                img = pygame.image.load(r'images/rat' + str(i) + '.png').convert_alpha()
+                img = pygame.transform.scale(img, (150, 150))
+                self.idleImages.append(img)
+            for i in range(1, 3):
+                img = pygame.image.load(r'images/rat' + str(i) + '.png').convert_alpha()
+                img = pygame.transform.scale(img, (150, 150))
+                self.talkingImages.append(img)
+
+            # Create dialogue for NPC
+            self.dialogue = ["Hello I am a rat", "Squeak", "Silly rat thing"]
+
+        # Plant NPC
+        elif type == "plant":
+            # Set initial position of NPC
+            self.x = 830
+            self.y = 200
+
+            # Add talking sprites and idle sprites to NPC
+            for i in range(1, 3):
+                img = pygame.image.load(r'images/plant' + str(i) + '.png').convert_alpha()
+                img = pygame.transform.scale(img, (150, 150))
+                self.idleImages.append(img)
+            for i in range(1, 3):
+                img = pygame.image.load(r'images/plant' + str(i) + '.png').convert_alpha()
+                img = pygame.transform.scale(img, (150, 150))
+                self.talkingImages.append(img)
+
+            # Create dialogue for NPC
+            self.dialogue = ["Hello I am a plant", "Plant noise", "Silly plant thing"]
+
+        self.image = self.idleImages[0]
         self.rect = self.image.get_rect(center=(self.x, self.y))
+
+        # # Set initial position of NPC
+        # self.x = random.randint(0 + 30, backgroundWidth - 30)
+        # self.y = random.randint(0 + 30, backgroundHeight - 30)
+        # self.rect = self.image.get_rect(center=(self.x, self.y))
 
     def getPosition(self):
         return self.x, self.y

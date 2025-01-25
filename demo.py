@@ -173,7 +173,7 @@ while run:
                                 # x,y = entity.getPosition()
                                 # effectsList.add(ThoughtBubble(x,y))
                                 futureWorld = entity.backgroundNum
-                                textItems = ["hello I am a frog", "blah blah blah", "i'm teleporting you now"]
+                                textItems = entity.dialogue
                 else:
                     textItems = textItems[1:]
                     if len(textItems) == 0:
@@ -208,7 +208,7 @@ while run:
 
 
     # background scrolling logic
-    if north and currentScene.y < 250:
+    if north and currentScene.y < 150:
         currentScene.y += velocity
         player.north = True
     else:

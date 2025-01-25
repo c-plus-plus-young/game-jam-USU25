@@ -34,10 +34,6 @@ class Player(pygame.sprite.Sprite):
         self.image = self.southImages[0]
         self.rect = self.image.get_rect(center=(screen_width // 2, screen_height // 2))  # Center player on screen
 
-    def move(self, x_speed, y_speed):
-        # The player stays in place, so no movement is needed
-        pass
-
     def update(self):
         if self.north or self.south or self.west or self.east:
 
