@@ -100,7 +100,7 @@ for i in range(3):
     entityList.add(Thinker(i, thinkerList[i], background_width, background_height))
 
 bubbleCounter = -60
-timer = 6000
+timer = 300
 futureWorld = -1
 currentWorld = -1
 
@@ -124,6 +124,11 @@ while run:
         screen.blit(pygame.image.load("images/textContainer.jpeg").convert(), (15, 10))
         time = font.render(str(timer / 60)[0:4], True, (0, 0, 0))
         screen.blit(time, (15, 15))
+        if timer < 0 and timer > -60:
+            currentWorld = -1
+            currentScene = backScene(currentScene)
+            timer = 300
+            playSound("bubblepop.mp3")
 
     bubbleCounter -= 1
     if bubbleCounter == 0:
@@ -173,6 +178,7 @@ while run:
                                 # x,y = entity.getPosition()
                                 # effectsList.add(ThoughtBubble(x,y))
                                 futureWorld = entity.backgroundNum
+                                timer = 300
                                 textItems = ["hello I am a frog", "blah blah blah", "i'm teleporting you now"]
                 else:
                     textItems = textItems[1:]
@@ -200,6 +206,8 @@ while run:
             if event.key == pygame.K_d:
                 east = False
             if event.key == pygame.K_b:
+                currentWorld = -1
+                timer = 300
                 currentWorld = -1
                 currentScene = backScene(currentScene)
                 playSound("bubblepop.mp3")
