@@ -1,6 +1,8 @@
 import time
 
 import pygame
+
+from Obstacle import Obstacle
 from music import playMusic, playSound
 from scene import Scene
 from Thinker import Thinker
@@ -110,7 +112,7 @@ for i in range(3):
     entityList.add(Thinker((i + 1), thinkerList[i], background_width, background_height))
 
 bubbleCounter = -60
-timerLength = 300
+timerLength = 5 * 100
 timer = timerLength
 futureWorld = -1
 currentWorld = -1
@@ -119,9 +121,19 @@ collectedPail = False
 collectedSoap = False
 collectedDuckie = False
 
+# Create the hub obstacles
+obstacles = pygame.sprite.Group()
+for i in range(2):
+    obs = Obstacle(background_width, background_height)
+    obstacles.add(obs)
+    entityList.add(obs)
+
+def add_obs():
+    entityList.add(obs)
+
 # Main loop=======================================================
 run = True
-
+last_direction = None
 while run:
 
     screen.fill(gameMap)
@@ -156,6 +168,7 @@ while run:
             currentScene = backScene(currentScene)
             timer = timerLength
             playSound("bubblepop.mp3")
+        add_obs()
 
     bubbleCounter -= 1
     if bubbleCounter == 0:
@@ -175,7 +188,6 @@ while run:
     if (len(textItems) > 1):
         text2 = font.render(textItems[1], True, (0, 0, 0))
         screen.blit(text2, (40, 540))
-
 
     # event handling
     for event in pygame.event.get():
@@ -249,31 +261,46 @@ while run:
             if event.key == pygame.K_n:
                 currentScene = nextScene()
 
-
-    # background scrolling logic
-    if north and currentScene.y < 150:
-        currentScene.y += velocity
+    # Background scrolling logic
+    if north:
+        if currentScene.y < 250:  # Ensure within boundary
+            if pygame.sprite.spritecollideany(player, obstacles) and last_direction != 'south':  # Check collision
+                velocity = 0  # Stop background movement
+            else:
+                velocity = 5  # Allow background movement
+                currentScene.y += velocity
+                last_direction = 'north'  # Update last valid direction
         player.north = True
-    else:
-        player.north = False
-
-    if south and currentScene.y > -(background_height - SCREEN_HEIGHT + 250):  # prevent scrolling past the bottom edge
-        currentScene.y -= velocity
+    elif south:
+        if currentScene.y > -(background_height - SCREEN_HEIGHT + 250):  # Ensure within boundary
+            if pygame.sprite.spritecollideany(player, obstacles) and last_direction != 'north':  # Check collision
+                velocity = 0  # Stop background movement
+            else:
+                velocity = 5  # Allow background movement
+                currentScene.y -= velocity
+                last_direction = 'south'  # Update last valid direction
         player.south = True
-    else:
-        player.south = False
-
-    if east and currentScene.x > -(background_width - SCREEN_WIDTH + 350):
-        currentScene.x -= velocity
+    elif east:
+        if currentScene.x > -(background_width - SCREEN_WIDTH + 350):  # Ensure within boundary
+            if pygame.sprite.spritecollideany(player, obstacles) and last_direction != 'west':  # Check collision
+                velocity = 0  # Stop background movement
+            else:
+                velocity = 5  # Allow background movement
+                currentScene.x -= velocity
+                last_direction = 'east'  # Update last valid direction
         player.east = True
-    else:
-        player.east = False
-
-    if west and currentScene.x < 350:
-        currentScene.x += velocity
+    elif west:
+        if currentScene.x < 350:  # Ensure within boundary
+            if pygame.sprite.spritecollideany(player, obstacles) and last_direction != 'east':  # Check collision
+                velocity = 0  # Stop background movement
+            else:
+                velocity = 5  # Allow background movement
+                currentScene.x += velocity
+                last_direction = 'west'  # Update last valid direction
         player.west = True
     else:
-        player.west = False
+        velocity = 0  # Stop movement when no direction is pressed
+        player.north = player.south = player.east = player.west = False
 
 
     # update the display
@@ -286,6 +313,9 @@ while run:
         if isinstance(entity, Thinker):
             x, y = entity.getPosition()
             entity.rect.center = (currentScene.x+x, currentScene.y+y)
+        if isinstance(entity, Obstacle):
+            x, y = entity.getPosition()
+            entity.rect.center = (currentScene.x + x, currentScene.y + y)
 
     for entity in effectsList.sprites():
         x, y = entity.getPosition()
