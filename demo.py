@@ -1,29 +1,37 @@
 import pygame
+from text import printText
+from music import playMusic
 
 pygame.init()
-pygame.joystick.init()
-joysticks = [pygame.joystick.Joystick(x) for x in range(pygame.joystick.get_count())]
-print(joysticks)
 
-# window
+# window dimensions
 SCREEN_WIDTH = 800
 SCREEN_HEIGHT = 600
 screen = pygame.display.set_mode((SCREEN_WIDTH, SCREEN_HEIGHT))
 
-# must create character outside of loop
+# Background setup
+background = pygame.image.load('images/background.jpg').convert()
+background_width, background_height = background.get_size()
+bg_x = 0
+bg_y = 0
+
+
+# Player class
 class Player(pygame.sprite.Sprite):
     def __init__(self):
-        self.player = pygame.Rect((200, 250, 50, 50))
-        self.color = "white"
+        pygame.sprite.Sprite.__init__(self)
+        self.images = []
+        for i in range(4):
+            img = pygame.image.load(r'images/image' + str(i) + '.png').convert_alpha()
+            img = pygame.transform.scale(img, (50, 50))  # Resize player image to 50x50
+            self.images.append(img)
+        self.image = self.images[0]
+        self.rect = self.image.get_rect(center=(SCREEN_WIDTH // 2, SCREEN_HEIGHT // 2))  # Center player on screen
 
     def move(self, x_speed, y_speed):
-        self.player.move_ip((x_speed, y_speed))
+        # The player stays in place, so no movement is needed
+        pass
 
-    def change_color(self, color):
-        self.color = color
-
-    def draw(self, game_screen):
-        pygame.draw.rect(game_screen, self.color, self.player)
 
 clock = pygame.time.Clock()
 player = Player()
@@ -57,7 +65,15 @@ mapChangeBlack = pygame.event.Event(MAP_EVENT, **map_data_black)
 #map data:
 gameMap = (0, 0, 0)
 
-# loop
+player_list = pygame.sprite.Group()
+player_list.add(player)
+
+# Movement
+north = south = east = west = False
+xVelocity = 10
+yVelocity = 10
+
+# Main loop
 run = True
 
 while run:
@@ -65,11 +81,13 @@ while run:
 
     screen.fill(gameMap)
 
-    player.draw(screen)
+    # background
+    screen.blit(background, (bg_x, bg_y))
 
+    # player
+    player_list.draw(screen)
 
-
-    # event handler
+    # event handling
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
             run = False
@@ -106,24 +124,22 @@ while run:
         elif event.type == MAP_EVENT:
             gameMap = event.mapData
 
+    # background scrolling logic
+    if north and bg_y < 0:
+        bg_y += yVelocity
+        player.image = player.images[3]
+    if south and bg_y > -(background_height - SCREEN_HEIGHT):  # prevent scrolling past the bottom edge
+        bg_y -= yVelocity
+        player.image = player.images[0]
+    if east and bg_x > -(background_width - SCREEN_WIDTH):
+        bg_x -= xVelocity
+        player.image = player.images[2]
+    if west and bg_x < 0:
+        bg_x += xVelocity
+        player.image = player.images[1]
 
-    #This is for player movement            
-    if north:
-        player.move(0, -velocity)    
-    if south:
-        player.move(0, velocity)        
-    if east:
-        player.move(velocity, 0)        
-    if west:
-        player.move(-velocity, 0)        
-
-    
-
-    
-
-
-    # must update in order for changes to appear
-    pygame.display.update()
+    # update the display
+    pygame.display.flip()
+    clock.tick(60)
 
 pygame.quit()
-
