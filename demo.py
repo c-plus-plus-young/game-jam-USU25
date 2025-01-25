@@ -1,3 +1,5 @@
+import time
+
 import pygame
 from music import playMusic, playSound
 from scene import Scene
@@ -135,14 +137,14 @@ while run:
         screen.blit(pygame.image.load("images/textContainer.jpeg").convert(), (15, 510))
         text3 = font.render("GAME WON", True, (0, 0, 0))
         screen.blit(text3, (40, 514))
-        time.sleep(300)
+        time.sleep(3)
         run = False
 
     timer -= 1
     if currentWorld > 0:
         screen.blit(pygame.image.load("images/timer.jpg").convert(), (15, 10))
-        time = font.render(str(timer / 60)[0:4], True, (0, 0, 0))
-        screen.blit(time, (50, 15))
+        currTime = font.render(str(timer / 60)[0:4], True, (0, 0, 0))
+        screen.blit(currTime, (50, 15))
         if currentWorld == 1:
             entityList.add(Thinker(0, "duckie", background_width, background_height))
         elif currentWorld == 2:
