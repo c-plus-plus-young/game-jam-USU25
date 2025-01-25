@@ -66,6 +66,7 @@ class Scene:
           self.y = y
           self.background = background
           self.objects = objects
+          
      
      def setX(self, x):
           self.x = x

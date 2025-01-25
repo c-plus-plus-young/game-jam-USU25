@@ -45,11 +45,16 @@ class Thinker(pygame.sprite.Sprite):
         img = pygame.image.load(r'images/player_image.png').convert_alpha()
         img = pygame.transform.scale(img, (50, 50))  # Resize player image to 50x50
         self.image = img
-        self.rect = self.image.get_rect(center=(random.randint(0, backgroundWidth), random.randint(0 ,backgroundHeight)))
+        self.x = random.randint(0, backgroundWidth)
+        self.y = random.randint(0 ,backgroundHeight)
+        self.rect = self.image.get_rect(center=(self.x, self.y))
 
     def move(self, x_speed, y_speed):
         # The player stays in place, so no movement is needed
         pass
+
+    def getPosition(self):
+        return self.x, self.y
 
 
 pygame.init()
@@ -82,7 +87,7 @@ def backScene():
 
 
 
-thinker = Thinker()
+thinker = Thinker(background_width, background_height)
 
 
 
@@ -127,7 +132,8 @@ while run:
     # background
     screen.blit(currentScene.background, (currentScene.x, currentScene.y))
 
-    # player
+    # sprites
+    entityList.update()
     entityList.draw(screen)
     
 
@@ -194,8 +200,10 @@ while run:
     animating = animating + 1
 
     #Update entity positions
-    for thinker in entityList:
-        pass
+    for entity in entityList.sprites():
+        if isinstance(entity, Thinker):
+            x, y = entity.getPosition()
+            entity.rect.center = (currentScene.x+x, currentScene.y+y)
 
 
 pygame.quit()
