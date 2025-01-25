@@ -21,9 +21,9 @@ class Player(pygame.sprite.Sprite):
     def __init__(self):
         pygame.sprite.Sprite.__init__(self)
         self.images = []
-        for i in range(4):
-            img = pygame.image.load(r'images/image' + str(i) + '.png').convert_alpha()
-            img = pygame.transform.scale(img, (50, 50))  # Resize player image to 50x50
+        for i in range(1, 3):
+            img = pygame.image.load(r'images/wizard' + str(i) + '.png').convert_alpha()
+            img = pygame.transform.scale(img, (150, 150))  # Resize player image to 50x50
             self.images.append(img)
         self.image = self.images[0]
         self.rect = self.image.get_rect(center=(SCREEN_WIDTH // 2, SCREEN_HEIGHT // 2))  # Center player on screen
@@ -72,6 +72,7 @@ player_list.add(player)
 north = south = east = west = False
 xVelocity = 10
 yVelocity = 10
+animating = 0
 
 # Main loop
 run = True
@@ -94,8 +95,6 @@ while run:
 
         elif event.type == pygame.USEREVENT:
             screen.fill((100, 100, 100))
-
-
 
         #Player Movement:
         elif event.type == pygame.KEYDOWN:
@@ -124,22 +123,23 @@ while run:
         elif event.type == MAP_EVENT:
             gameMap = event.mapData
 
+    if animating // 10 >= len(player.images):
+        animating = 0
+
     # background scrolling logic
     if north and bg_y < 0:
         bg_y += yVelocity
-        player.image = player.images[3]
     if south and bg_y > -(background_height - SCREEN_HEIGHT):  # prevent scrolling past the bottom edge
         bg_y -= yVelocity
-        player.image = player.images[0]
+        player.image = player.images[animating // 10]
     if east and bg_x > -(background_width - SCREEN_WIDTH):
         bg_x -= xVelocity
-        player.image = player.images[2]
     if west and bg_x < 0:
         bg_x += xVelocity
-        player.image = player.images[1]
 
     # update the display
     pygame.display.flip()
     clock.tick(60)
+    animating = animating + 1
 
 pygame.quit()
