@@ -5,6 +5,7 @@ import random
 class Thinker(pygame.sprite.Sprite):
     def __init__(self, backgroundWidth = 50, backgroundHeight = 50):
         pygame.sprite.Sprite.__init__(self)
+        self.isTalking = False
         self.idleImages = []
         self.talkingImages = []
         self.animationSpeed = 15

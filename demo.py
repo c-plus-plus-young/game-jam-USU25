@@ -1,6 +1,6 @@
 import pygame
 from text import advanceableText
-from music import playMusic
+from music import playMusic, playSound
 from scene import Scene
 from Thinker import Thinker
 from Player import Player
@@ -89,7 +89,10 @@ while run:
     if animating // 15 > 2:
         animating = 0
 
-    
+    if not thinker.isTalking:
+        
+    else:
+        thinker.image = thinker.talkingImages[animating // 15]
 
     # event handling
     for event in pygame.event.get():
@@ -102,9 +105,16 @@ while run:
         #Player Movement:
         elif event.type == pygame.KEYDOWN:
             if event.key == pygame.K_SPACE and pygame.sprite.collide_rect(thinker, player):
-                frogText = ["hello I am a frog", "blah blah blah", "i'm teleporting you now"]
-                advanceableText(frogText, screen)
-                currentScene = nextScene()
+                if thinker.isTalking:
+                    textItems = textItems[0:]
+                    if len(textItems) == 0:
+                        thinker.isTalking = False
+                        # INSERT TELEPORT CODE HERE
+                else:
+                    thinker.isTalking = True
+                    textItems = ["", "hello I am a frog", "blah blah blah", "i'm teleporting you now"]
+
+                # currentScene = nextScene()
             if event.key == pygame.K_w:
                 north = True
             if event.key == pygame.K_s:
@@ -117,6 +127,7 @@ while run:
                 textItems = ["word1", "word2", "word3"]
             if event.key == pygame.K_SPACE:
                 textItems = textItems[1:]
+                print(textItems)
         elif event.type == pygame.KEYUP:
 
             if event.key == pygame.K_w:
