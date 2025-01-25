@@ -96,7 +96,7 @@ gameMap = (0, 0, 0)
 #create the hub thinkers
 for i in range(4):
     entityList.add(Thinker(background_width, background_height))
-
+bubbleCounter = -60
 
 # Main loop=======================================================
 run = True
@@ -111,6 +111,11 @@ while run:
     # sprites
     entityList.update()
     entityList.draw(screen)
+
+    bubbleCounter -= 1
+    if bubbleCounter == 0:
+        currentScene = nextScene()
+        background_width, background_height = currentScene.background.get_size()
 
     if len(effectsList) > 0:
         effectsList.draw(screen)
@@ -167,10 +172,9 @@ while run:
                                     effectsList.add(ThoughtBubble(x, y))
                                     entity.isThinking = False
                         isTalking = False
-                        pygame.time.delay(10000)
-                        currentScene = nextScene()
+                        # pygame.time.delay(10000)
+                        bubbleCounter = 120
                         playSound("flowbubble.wav")
-                        background_width, background_height = currentScene.background.get_size()
 
         elif event.type == pygame.KEYUP:
 
