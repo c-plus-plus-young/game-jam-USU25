@@ -123,9 +123,6 @@ while run:
                 west = True
             if event.key == pygame.K_d:
                 east = True
-            if event.key == pygame.K_SPACE:
-                textItems = textItems[1:]
-                print(textItems)
         elif event.type == pygame.KEYUP:
 
             if event.key == pygame.K_w:
