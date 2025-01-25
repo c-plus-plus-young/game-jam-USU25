@@ -95,8 +95,9 @@ gameMap = (0, 0, 0)
 
 
 #create the hub thinkers
-for i in range(4):
-    entityList.add(Thinker(i, background_width, background_height))
+thinkerList = ["frog", "rat", "plant"]
+for i in range(3):
+    entityList.add(Thinker(i, thinkerList[i], background_width, background_height))
     for entity in entityList:
         if entity != player:
             print(entity.backgroundNum)

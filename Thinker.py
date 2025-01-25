@@ -3,7 +3,7 @@ import random
 
 # Thinker class
 class Thinker(pygame.sprite.Sprite):
-    def __init__(self, backgroundNum, backgroundWidth = 50, backgroundHeight = 50):
+    def __init__(self, backgroundNum, type, backgroundWidth = 50, backgroundHeight = 50):
         pygame.sprite.Sprite.__init__(self)
         self.isTalking = False
         self.isThinking = False
@@ -16,14 +16,33 @@ class Thinker(pygame.sprite.Sprite):
 
 
         # Add talking sprites and idle sprites to NPC
-        for i in range(1, 3):
-            img = pygame.image.load(r'images/frog' + str(i) + '.png').convert_alpha()
-            img = pygame.transform.scale(img, (100, 100))
-            self.idleImages.append(img)
-        for i in range(2, 4):
-            img = pygame.image.load(r'images/frog' + str(i) + '.png').convert_alpha()
-            img = pygame.transform.scale(img, (100, 100))
-            self.talkingImages.append(img)
+        if type == "frog":
+            for i in range(1, 3):
+                img = pygame.image.load(r'images/frog' + str(i) + '.png').convert_alpha()
+                img = pygame.transform.scale(img, (100, 100))
+                self.idleImages.append(img)
+            for i in range(2, 4):
+                img = pygame.image.load(r'images/frog' + str(i) + '.png').convert_alpha()
+                img = pygame.transform.scale(img, (100, 100))
+                self.talkingImages.append(img)
+        elif type == "rat":
+            for i in range(1, 3):
+                img = pygame.image.load(r'images/rat' + str(i) + '.png').convert_alpha()
+                img = pygame.transform.scale(img, (150, 150))
+                self.idleImages.append(img)
+            for i in range(1, 3):
+                img = pygame.image.load(r'images/rat' + str(i) + '.png').convert_alpha()
+                img = pygame.transform.scale(img, (150, 150))
+                self.talkingImages.append(img)
+        elif type == "plant":
+            for i in range(1, 3):
+                img = pygame.image.load(r'images/plant' + str(i) + '.png').convert_alpha()
+                img = pygame.transform.scale(img, (150, 150))
+                self.idleImages.append(img)
+            for i in range(1, 3):
+                img = pygame.image.load(r'images/plant' + str(i) + '.png').convert_alpha()
+                img = pygame.transform.scale(img, (150, 150))
+                self.talkingImages.append(img)
         self.image = self.idleImages[0]
 
         # Set initial position of NPC
