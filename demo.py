@@ -216,8 +216,11 @@ while run:
                 else:
                     textItems = textItems[1:]
                     if len(textItems) == 0:
-                        x, y = entity1.getPosition()
-                        effectsList.add(ThoughtBubble(x, y))
+                        if (entity1.type == ("rat" or "frog" or "plant")):
+                            x, y = entity1.getPosition()
+                            effectsList.add(ThoughtBubble(x, y))
+                            playSound("flowbubble.wav")
+                            bubbleCounter = 120
                         entity.isThinking = False
                         for entity in entityList.sprites():
                             entity.isTalking = False
@@ -230,14 +233,18 @@ while run:
                             if entity != player:
                                 if entity.type == "pail":
                                     collectedPail = True
+                                    playSound("bubblepop.mp3")
+                                    bubbleCounter = 40
                                 elif entity.type == "soap":
                                     collectedSoap = True
+                                    bubbleCounter = 40
+                                    playSound("bubblepop.mp3")
                                 elif entity.type == "duckie":
                                     collectedDuckie = True
+                                    playSound("bubblepop.mp3")
+                                    bubbleCounter = 40
                         isTalking = False
                         # pygame.time.delay(10000)
-                        bubbleCounter = 120
-                        playSound("flowbubble.wav")
 
         elif event.type == pygame.KEYUP:
 
