@@ -137,7 +137,8 @@ while run:
         screen.blit(pygame.image.load("images/textContainer.jpeg").convert(), (15, 510))
         text3 = font.render("GAME WON", True, (0, 0, 0))
         screen.blit(text3, (40, 514))
-        time.sleep(3)
+        time.sleep(1)
+        print("Game Won")
         run = False
 
     timer -= 1
