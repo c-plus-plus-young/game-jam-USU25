@@ -104,15 +104,15 @@ while run:
 
         #Player Movement:
         elif event.type == pygame.KEYDOWN:
-            if event.key == pygame.K_SPACE and pygame.sprite.collide_rect(thinker, player):
+            if event.key == pygame.K_SPACE:
                 if thinker.isTalking:
-                    textItems = textItems[0:]
+                    textItems = textItems[1:]
                     if len(textItems) == 0:
                         thinker.isTalking = False
                         # INSERT TELEPORT CODE HERE
-                else:
+                elif pygame.sprite.collide_rect(thinker, player):
                     thinker.isTalking = True
-                    textItems = ["", "hello I am a frog", "blah blah blah", "i'm teleporting you now"]
+                    textItems = ["hello I am a frog", "blah blah blah", "i'm teleporting you now"]
 
                 # currentScene = nextScene()
             if event.key == pygame.K_w:
