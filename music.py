@@ -22,4 +22,4 @@ def playSound(soundName):
     my_sound.set_volume(1)
 
 if __name__ == '__main__':
-    playMusic("music4.mp3")
+    playMusic("music5.mp3")
