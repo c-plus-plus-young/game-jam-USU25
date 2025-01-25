@@ -22,7 +22,7 @@ SCREEN_HEIGHT = 600
 screen = pygame.display.set_mode((SCREEN_WIDTH, SCREEN_HEIGHT))
 
 # Background setup
-background = pygame.image.load('images/hub.jpg').convert()
+background = pygame.image.load('images/hubBG.png').convert()
 background_width, background_height = background.get_size()
 currentScene = Scene(background=background)
 backgrounds = ['images/background1.jpg','images/background2.jpg','images/background3.jpg','images/background4.jpg', 'images/background5.jpg']
@@ -58,7 +58,7 @@ clock = pygame.time.Clock()
 
 
 #player movement
-velocity = 10
+velocity = 5
 north = south = east = west = False
 animating = 0
 
@@ -138,6 +138,7 @@ while run:
                             entity.isTalking = False
                         isTalking = False
                         currentScene = nextScene()
+                        background_width, background_height = currentScene.background.get_size()
 
         elif event.type == pygame.KEYUP:
 
