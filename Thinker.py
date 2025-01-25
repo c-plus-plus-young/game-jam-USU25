@@ -1,7 +1,6 @@
 import pygame
 
-from demo import background_width
-
+from random import randint
 
 # Thinker class
 class Thinker(pygame.sprite.Sprite):
@@ -83,8 +82,8 @@ class Thinker(pygame.sprite.Sprite):
 
         elif type == "soap":
             # Set initial position of NPC
-            self.x = randint(25, background_width - 25)
-            self.y = randint(25, background_height - 25)
+            self.x = randint(25, backgroundWidth - 25)
+            self.y = randint(25, backgroundHeight - 25)
             img = pygame.image.load("images/soap.png").convert_alpha()
             self.idleImages.append(img)
             self.talkingImages.append(img)
@@ -92,8 +91,8 @@ class Thinker(pygame.sprite.Sprite):
             self.isThinking = False
         elif type == "pail":
             # Set initial position of NPC
-            self.x = randint(25, background_width - 25)
-            self.y = randint(25, background_height - 25)
+            self.x = randint(25, backgroundWidth - 25)
+            self.y = randint(25, backgroundHeight - 25)
             img = pygame.image.load("images/pail.png").convert_alpha()
             self.idleImages.append(img)
             self.talkingImages.append(img)
@@ -101,8 +100,8 @@ class Thinker(pygame.sprite.Sprite):
             self.isThinking = False
         elif type == "duckie":
             # Set initial position of NPC
-            self.x = randint(25, background_width - 25)
-            self.y = randint(25, background_height - 25)
+            self.x = randint(25, backgroundWidth - 25)
+            self.y = randint(25, backgroundHeight - 25)
             img = pygame.image.load("images/duckie.png").convert_alpha()
             self.idleImages.append(img)
             self.talkingImages.append(img)
@@ -110,8 +109,8 @@ class Thinker(pygame.sprite.Sprite):
             self.isThinking = False
         elif type == "ball":
             # Set initial position of NPC
-            self.x = randint(25, background_width - 25)
-            self.y = randint(25, background_height - 25)
+            self.x = randint(25, backgroundWidth - 25)
+            self.y = randint(25, backgroundHeight - 25)
             img = pygame.image.load("images/duckie.png").convert_alpha()
             self.idleImages.append(img)
             self.talkingImages.append(img)
@@ -119,8 +118,8 @@ class Thinker(pygame.sprite.Sprite):
             self.isThinking = False
         elif type == "car":
             # Set initial position of NPC
-            self.x = randint(25, background_width - 25)
-            self.y = randint(25, background_height - 25)
+            self.x = randint(25, backgroundWidth - 25)
+            self.y = randint(25, backgroundHeight - 25)
             img = pygame.image.load("images/duckie.png").convert_alpha()
             self.idleImages.append(img)
             self.talkingImages.append(img)
@@ -128,56 +127,56 @@ class Thinker(pygame.sprite.Sprite):
             self.isThinking = False
         elif type == "rubix":
             # Set initial position of NPC
-            self.x = randint(25, background_width - 25)
-            self.y = randint(25, background_height - 25)
+            self.x = randint(25, backgroundWidth - 25)
+            self.y = randint(25, backgroundHeight - 25)
             img = pygame.image.load("images/duckie.png").convert_alpha()
             self.idleImages.append(img)
             self.talkingImages.append(img)
             self.dialogue = ["Hmm.. That's not quite right"]
             self.isThinking = False
         elif type == "knife":
-            self.x = randint(25, background_width - 25)
-            self.y = randint(25, background_height - 25)
+            self.x = randint(25, backgroundWidth - 25)
+            self.y = randint(25, backgroundHeight - 25)
             img = pygame.image.load("images/knife.png").convert_alpha()
             self.idleImages.append(img)
             self.talkingImages.append(img)
             self.dialogue = ["Hmm.. That's not quite right"]
             self.isThinking = False
         elif type == "pan":
-            self.x = randint(25, background_width - 25)
-            self.y = randint(25, background_height - 25)
+            self.x = randint(25, backgroundWidth - 25)
+            self.y = randint(25, backgroundHeight - 25)
             img = pygame.image.load("images/pan.png").convert_alpha()
             self.idleImages.append(img)
             self.talkingImages.append(img)
             self.dialogue = ["Hmm.. That's not quite right"]
             self.isThinking = False
         elif type == "flour":
-            self.x = randint(25, background_width - 25)
-            self.y = randint(25, background_height - 25)
+            self.x = randint(25, backgroundWidth - 25)
+            self.y = randint(25, backgroundHeight - 25)
             img = pygame.image.load("images/flour.png").convert_alpha()
             self.idleImages.append(img)
             self.talkingImages.append(img)
             self.dialogue = ["Hmm.. That's not quite right"]
             self.isThinking = False
         elif type == "shovel":
-            self.x = randint(25, background_width - 25)
-            self.y = randint(25, background_height - 25)
+            self.x = randint(25, backgroundWidth - 25)
+            self.y = randint(25, backgroundHeight - 25)
             img = pygame.image.load("images/shovel.png").convert_alpha()
             self.idleImages.append(img)
             self.talkingImages.append(img)
             self.dialogue = ["Hmm.. That's not quite right"]
             self.isThinking = False
-        elif type == "hoe":
-            self.x = randint(25, background_width - 25)
-            self.y = randint(25, background_height - 25)
-            img = pygame.image.load("images/hoe.png").convert_alpha()
+        elif type == "rake":
+            self.x = randint(25, backgroundWidth - 25)
+            self.y = randint(25, backgroundHeight - 25)
+            img = pygame.image.load("images/rake.png").convert_alpha()
             self.idleImages.append(img)
             self.talkingImages.append(img)
             self.dialogue = ["Hmm.. That's not quite right"]
             self.isThinking = False
         elif type == "worm":
-            self.x = randint(25, background_width - 25)
-            self.y = randint(25, background_height - 25)
+            self.x = randint(25, backgroundWidth - 25)
+            self.y = randint(25, backgroundHeight - 25)
             img = pygame.image.load("images/worm.png").convert_alpha()
             self.idleImages.append(img)
             self.talkingImages.append(img)
