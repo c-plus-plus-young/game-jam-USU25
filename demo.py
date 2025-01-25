@@ -1,5 +1,5 @@
 import pygame
-from text import printText, advanceableText
+from text import printText
 from music import playMusic
 
 pygame.init()
@@ -45,22 +45,6 @@ velocity = 1
 
 #Custom Events
 MAP_EVENT = pygame.USEREVENT + 1
-map_data_red = { "mapData" : (255,0,0)}
-mapChangeRed = pygame.event.Event(MAP_EVENT, **map_data_red)
-
-
-map_data_blue = { "mapData" : (0,0,255)}
-mapChangeBlue = pygame.event.Event(MAP_EVENT, **map_data_blue)
-
-
-map_data_green = { "mapData" : (0,255,0)}
-mapChangeGreen = pygame.event.Event(MAP_EVENT, **map_data_green)
-
-map_data_yellow = { "mapData" : (255,255,0)}
-mapChangeYellow = pygame.event.Event(MAP_EVENT, **map_data_yellow)
-
-map_data_black = { "mapData" : (0,0,0)}
-mapChangeBlack = pygame.event.Event(MAP_EVENT, **map_data_black)
 
 #map data:
 gameMap = (0, 0, 0)
@@ -78,7 +62,6 @@ run = True
 
 while run:
 
-
     screen.fill(gameMap)
 
     # background
@@ -95,24 +78,17 @@ while run:
         elif event.type == pygame.USEREVENT:
             screen.fill((100, 100, 100))
 
-
-
         #Player Movement:
         elif event.type == pygame.KEYDOWN:
             if event.key == pygame.K_w:
-                pygame.event.post(mapChangeRed)
                 north = True
             if event.key == pygame.K_s:
-                pygame.event.post(mapChangeGreen)
                 south = True
             if event.key == pygame.K_a:
-                pygame.event.post(mapChangeBlue)
                 west = True
             if event.key == pygame.K_d:
-                pygame.event.post(mapChangeYellow)
                 east = True
         elif event.type == pygame.KEYUP:
-            pygame.event.post(mapChangeBlack)
             if event.key == pygame.K_w:
                 north = False
             if event.key == pygame.K_s:
