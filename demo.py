@@ -58,6 +58,8 @@ def fade_effect(fade_out=True):
 
 def nextScene():
     fade_effect(fade_out=True)
+    pygame.mixer_music.stop()
+    playMusic("music4.mp3")
 
     saveScene()
     background = pygame.image.load(backgrounds[random.randint(0,4)]).convert()
@@ -81,7 +83,8 @@ velocity = 5
 north = south = east = west = False
 animating = 0
 
-
+#play music
+playMusic("music5.mp3")
 
 
 #map data:
