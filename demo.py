@@ -17,19 +17,19 @@ class Player(pygame.sprite.Sprite):
         # Add images to North, South, East and West sprite sheets
         for i in range(1, 3):
             img = pygame.image.load(r'images/wizard' + str(i) + '.png').convert_alpha()
-            img = pygame.transform.scale(img, (150, 150))
+            img = pygame.transform.scale(img, (100, 100))
             self.southImages.append(img)
         for i in range(3, 5):
             img = pygame.image.load(r'images/wizard' + str(i) + '.png').convert_alpha()
-            img = pygame.transform.scale(img, (150, 150))
+            img = pygame.transform.scale(img, (100, 100))
             self.eastImages.append(img)
         for i in range(5, 7):
             img = pygame.image.load(r'images/wizard' + str(i) + '.png').convert_alpha()
-            img = pygame.transform.scale(img, (150, 150))
+            img = pygame.transform.scale(img, (100, 100))
             self.westImages.append(img)
         for i in range(7, 9):
             img = pygame.image.load(r'images/wizard' + str(i) + '.png').convert_alpha()
-            img = pygame.transform.scale(img, (150, 150))
+            img = pygame.transform.scale(img, (100, 100))
             self.northImages.append(img)
         self.image = self.northImages[0]
         self.rect = self.image.get_rect(center=(SCREEN_WIDTH // 2, SCREEN_HEIGHT // 2))  # Center player on screen
@@ -209,5 +209,3 @@ while run:
 pygame.quit()
 
 
-
-#
