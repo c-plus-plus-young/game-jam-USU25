@@ -143,16 +143,16 @@ while run:
 
 
     # background scrolling logic
-    if north and currentScene.y < 0:
+    if north and currentScene.y < 250:
         currentScene.y += velocity
         player.image = player.northImages[animating // 15]
-    if south and currentScene.y > -(background_height - SCREEN_HEIGHT):  # prevent scrolling past the bottom edge
+    if south and currentScene.y > -(background_height - SCREEN_HEIGHT + 250):  # prevent scrolling past the bottom edge
         currentScene.y -= velocity
         player.image = player.southImages[animating // 15]
-    if east and currentScene.x > -(background_width - SCREEN_WIDTH):
+    if east and currentScene.x > -(background_width - SCREEN_WIDTH + 350):
         currentScene.x -= velocity
         player.image = player.eastImages[animating // 15]
-    if west and currentScene.x < 0:
+    if west and currentScene.x < 350:
         currentScene.x += velocity
         player.image = player.westImages[animating // 15]
 
