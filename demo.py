@@ -1,4 +1,6 @@
 import pygame
+from text import printText
+from music import playMusic
 
 pygame.init()
 pygame.joystick.init()
