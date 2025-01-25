@@ -19,7 +19,7 @@ Uses alternate channel automatically to avoid restarting song
 def playSound(soundName):
     my_sound = mixer.Sound("sound/" + soundName)
     my_sound.play()
-    my_sound.set_volume(1)
+    my_sound.set_volume(5)
 
 if __name__ == '__main__':
     playMusic("music5.mp3")

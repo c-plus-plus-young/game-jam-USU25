@@ -27,6 +27,7 @@ background_width, background_height = background.get_size()
 currentScene = Scene(background=background)
 backgrounds = ['images/background1.jpg','images/background2.jpg','images/background3.jpg','images/background4.jpg', 'images/background5.jpg']
 
+<<<<<<< Updated upstream
 player = Player(SCREEN_WIDTH, SCREEN_HEIGHT)
 
 entityList = pygame.sprite.Group()
@@ -34,6 +35,8 @@ entityList.add(player)
 
 effectsList = pygame.sprite.Group()
 
+=======
+>>>>>>> Stashed changes
 #scenes set up
 scenes = []
 def saveScene():
@@ -47,11 +50,22 @@ def nextScene():
     effectsList.empty()
     return scene
 
+<<<<<<< Updated upstream
 def backScene(currentScene):
     if len(scenes) > 0:
         return scenes.pop()
     else:
         return currentScene
+=======
+def backScene():
+    playSound("bubblepop.mp3")
+    return scenes.pop()
+    
+
+
+
+
+>>>>>>> Stashed changes
 
 clock = pygame.time.Clock()
 
@@ -138,6 +152,7 @@ while run:
                             entity.isTalking = False
                         isTalking = False
                         currentScene = nextScene()
+                        playSound("flowbubble.wav")
                         background_width, background_height = currentScene.background.get_size()
 
         elif event.type == pygame.KEYUP:
@@ -151,7 +166,12 @@ while run:
             if event.key == pygame.K_d:
                 east = False
             if event.key == pygame.K_b:
+<<<<<<< Updated upstream
                 currentScene = backScene(currentScene)
+=======
+                currentScene = backScene()
+                playSound("bubblepop.mp3")
+>>>>>>> Stashed changes
             if event.key == pygame.K_n:
                 currentScene = nextScene()
 
