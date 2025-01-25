@@ -89,7 +89,10 @@ while run:
     if animating // 15 >= len(player.northImages):
         animating = 0
 
-    thinker.image = thinker.idleImages[animating // 15]
+    if not thinker.isTalking:
+        thinker.image = thinker.idleImages[animating // 15]
+    else:
+        thinker.image = thinker.talkingImages[animating // 15]
 
     # event handling
     for event in pygame.event.get():
@@ -102,10 +105,16 @@ while run:
         #Player Movement:
         elif event.type == pygame.KEYDOWN:
             if event.key == pygame.K_SPACE and pygame.sprite.collide_rect(thinker, player):
-                thinker.image = thinker.talkingImages[animating // 15]
-                frogText = ["hello I am a frog", "blah blah blah", "i'm teleporting you now"]
-                advanceableText(frogText, screen)
-                currentScene = nextScene()
+                if not thinker.isTalking:
+                    thinker.isTalking = True
+                    textItems = ["hello I am a frog", "hello!!!!", "blah blah blah", "i'm teleporting you now"]
+                    if len(textItems) == 0:
+                        thinker.isTalking = False
+                else:
+                    textItems = textItems[1:]
+                    if len(textItems) == 0:
+                        thinker.isTalking = False
+                # currentScene = nextScene()
             if event.key == pygame.K_w:
                 north = True
             if event.key == pygame.K_s:
@@ -114,8 +123,6 @@ while run:
                 west = True
             if event.key == pygame.K_d:
                 east = True
-            if event.key == pygame.K_k:
-                textItems = ["word1", "word2", "word3"]
             if event.key == pygame.K_SPACE:
                 textItems = textItems[1:]
                 print(textItems)
