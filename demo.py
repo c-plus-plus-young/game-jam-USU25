@@ -207,7 +207,3 @@ while run:
 
 
 pygame.quit()
-
-
-
-#
