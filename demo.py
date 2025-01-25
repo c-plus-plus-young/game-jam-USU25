@@ -18,9 +18,10 @@ SCREEN_HEIGHT = 600
 screen = pygame.display.set_mode((SCREEN_WIDTH, SCREEN_HEIGHT))
 
 # Background setup
-background = pygame.image.load('images/background1.jpg').convert()
+background = pygame.image.load('images/hub.jpg').convert()
 background_width, background_height = background.get_size()
 currentScene = Scene(background=background)
+backgrounds = ['images/background1.jpg','images/background2.jpg','images/background3.jpg','images/background4.jpg', 'images/background5.jpg']
 
 
 #scenes set up
@@ -31,7 +32,7 @@ def saveScene():
 
 def nextScene():
     saveScene()
-    background = pygame.image.load('images/background2.jpg').convert()
+    background = pygame.image.load(backgrounds[random.randint(0,5)]).convert()
     scene = Scene(background=background)
     return scene
 
@@ -61,8 +62,7 @@ entityList.add(player)
 
 #create the hub thinkers
 for i in range(4):
-    thinker = Thinker(background_width, background_height)
-    entityList.add(thinker)
+    entityList.add(Thinker(background_width, background_height))
 
 # Main loop=======================================================
 run = True
@@ -86,10 +86,10 @@ while run:
         text2 = font.render(textItems[1], True, (255, 255, 255))
         screen.blit(text2, (25, 550))
 
-    if animating // 15 >= len(player.northImages):
+    if animating // 15 > 2:
         animating = 0
 
-    thinker.image = thinker.idleImages[animating // 15]
+    
 
     # event handling
     for event in pygame.event.get():
@@ -102,7 +102,6 @@ while run:
         #Player Movement:
         elif event.type == pygame.KEYDOWN:
             if event.key == pygame.K_SPACE and pygame.sprite.collide_rect(thinker, player):
-                thinker.image = thinker.talkingImages[animating // 15]
                 frogText = ["hello I am a frog", "blah blah blah", "i'm teleporting you now"]
                 advanceableText(frogText, screen)
                 currentScene = nextScene()
@@ -118,7 +117,6 @@ while run:
                 textItems = ["word1", "word2", "word3"]
             if event.key == pygame.K_SPACE:
                 textItems = textItems[1:]
-                print(textItems)
         elif event.type == pygame.KEYUP:
 
             if event.key == pygame.K_w:
@@ -138,16 +136,28 @@ while run:
     # background scrolling logic
     if north and currentScene.y < 250:
         currentScene.y += velocity
-        player.image = player.northImages[animating // 15]
+        player.north = True
+    else:
+        player.north = False
+        
     if south and currentScene.y > -(background_height - SCREEN_HEIGHT + 250):  # prevent scrolling past the bottom edge
         currentScene.y -= velocity
-        player.image = player.southImages[animating // 15]
+        player.south = True
+    else:
+        player.south = False
+        
     if east and currentScene.x > -(background_width - SCREEN_WIDTH + 350):
         currentScene.x -= velocity
-        player.image = player.eastImages[animating // 15]
+        player.east = True
+    else:
+        player.east = False
+        
     if west and currentScene.x < 350:
         currentScene.x += velocity
-        player.image = player.westImages[animating // 15]
+        player.west = True
+    else:
+        player.west = False
+    
 
     # update the display
     pygame.display.flip()
@@ -159,5 +169,6 @@ while run:
         if isinstance(entity, Thinker):
             x, y = entity.getPosition()
             entity.rect.center = (currentScene.x+x, currentScene.y+y)
+
 
 pygame.quit()
