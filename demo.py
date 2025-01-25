@@ -86,13 +86,8 @@ while run:
         text2 = font.render(textItems[1], True, (255, 255, 255))
         screen.blit(text2, (25, 550))
 
-    if animating // 15 > 2:
-        animating = 0
 
-    if not thinker.isTalking:
-        
-    else:
-        thinker.image = thinker.talkingImages[animating // 15]
+
 
     # event handling
     for event in pygame.event.get():
@@ -104,15 +99,8 @@ while run:
 
         #Player Movement:
         elif event.type == pygame.KEYDOWN:
-            if event.key == pygame.K_SPACE and pygame.sprite.collide_rect(thinker, player):
-                if thinker.isTalking:
-                    textItems = textItems[0:]
-                    if len(textItems) == 0:
-                        thinker.isTalking = False
-                        # INSERT TELEPORT CODE HERE
-                else:
-                    thinker.isTalking = True
-                    textItems = ["", "hello I am a frog", "blah blah blah", "i'm teleporting you now"]
+            if event.key == pygame.K_SPACE and pygame.sprite.collide_rect(entityList.sprites(), player):
+                print("heu")
 
                 # currentScene = nextScene()
             if event.key == pygame.K_w:
