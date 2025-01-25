@@ -35,7 +35,7 @@ def saveScene():
 
 def nextScene():
     saveScene()
-    background = pygame.image.load(backgrounds[random.randint(0,5)]).convert()
+    background = pygame.image.load(backgrounds[random.randint(1,5)]).convert()
     scene = Scene(background=background)
     return scene
 
