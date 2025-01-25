@@ -26,8 +26,8 @@ class Thinker(pygame.sprite.Sprite):
         self.image = self.idleImages[0]
 
         # Set initial position of NPC
-        self.x = random.randint(0, backgroundWidth)
-        self.y = random.randint(0 ,backgroundHeight)
+        self.x = random.randint(0 + 30, backgroundWidth - 30)
+        self.y = random.randint(0 + 30, backgroundHeight - 30)
         self.rect = self.image.get_rect(center=(self.x, self.y))
 
     def getPosition(self):
