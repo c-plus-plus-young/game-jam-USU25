@@ -12,7 +12,7 @@ pygame.init()
 
 # font init
 pygame.font.init()
-font = pygame.font.Font("fonts/Modak-Regular.ttf", 30)
+font = pygame.font.Font("fonts/Modak-Regular.ttf", 25)
 textItems = []
 isTalking = False
 
@@ -92,12 +92,13 @@ while run:
         effectsList.draw(screen)
     effectsList.update()
     if (len(textItems) > 0):
-        pygame.draw.rect(screen, (0, 255, 0), pygame.Rect(15, 510, 770, 80))
-        text1 = font.render(textItems[0], True, (255, 255, 255))
-        screen.blit(text1, (25, 515))
+        screen.blit(pygame.image.load("images/textContainer.jpeg").convert(), (15, 510))
+        # pygame.draw.rect(screen, (0, 255, 0), pygame.Rect(15, 510, 770, 80))
+        text1 = font.render(textItems[0], True, (0, 0, 0))
+        screen.blit(text1, (40, 514))
     if (len(textItems) > 1):
-        text2 = font.render(textItems[1], True, (255, 255, 255))
-        screen.blit(text2, (25, 550))
+        text2 = font.render(textItems[1], True, (0, 0, 0))
+        screen.blit(text2, (40, 540))
 
 
 
