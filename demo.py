@@ -98,6 +98,8 @@ gameMap = (0, 0, 0)
 for i in range(4):
     entityList.add(Thinker(background_width, background_height))
 bubbleCounter = -60
+timer = 6000
+currentWorld = 0
 
 # Main loop=======================================================
 run = True
@@ -112,6 +114,11 @@ while run:
     # sprites
     entityList.update()
     entityList.draw(screen)
+
+    timer -= 1
+    if currentWorld != 2:
+        time = font.render(str(timer / 60)[0:4], True, (0, 0, 0))
+        screen.blit(time, (15, 15))
 
     bubbleCounter -= 1
     if bubbleCounter == 0:
