@@ -22,7 +22,7 @@ screen = pygame.display.set_mode((SCREEN_WIDTH, SCREEN_HEIGHT))
 background = pygame.image.load('images/hubBG.png').convert()
 background_width, background_height = background.get_size()
 currentScene = Scene(background=background)
-backgrounds = ['images/bedroomBG.png','images/kitchenBG.png','images/gardenBG.png']
+backgrounds = ['images/hubBG.png', 'images/bedroomBG.png','images/kitchenBG.png','images/gardenBG.png']
 
 player = Player(SCREEN_WIDTH, SCREEN_HEIGHT)
 
@@ -64,6 +64,10 @@ def nextScene():
     effectsList.empty()
     entityList.empty()
     entityList.add(player)
+    if futureWorld == 0:
+        playMusic("music5.mp3")
+        for i in range(3):
+            entityList.add(Thinker((i + 1), thinkerList[i], background_width, background_height))
     return scene
 
 def backScene(currentScene):
@@ -75,7 +79,7 @@ def backScene(currentScene):
         currentScene = scenes.pop()
     background_width, background_height = currentScene.background.get_size()
     for i in range(3):
-        entityList.add(Thinker(i, thinkerList[i], background_width, background_height))
+        entityList.add(Thinker((i + 1), thinkerList[i], background_width, background_height))
     entityList.add(player)
     return currentScene
 
@@ -101,13 +105,17 @@ gameMap = (0, 0, 0)
 #create the hub thinkers
 thinkerList = ["frog", "rat", "plant"]
 for i in range(3):
-    entityList.add(Thinker(i, thinkerList[i], background_width, background_height))
+    entityList.add(Thinker((i + 1), thinkerList[i], background_width, background_height))
 
 bubbleCounter = -60
 timerLength = 300
 timer = timerLength
 futureWorld = -1
 currentWorld = -1
+
+collectedPail = False
+collectedSoap = False
+collectedDuckie = False
 
 # Main loop=======================================================
 run = True
@@ -123,12 +131,24 @@ while run:
     entityList.update()
     entityList.draw(screen)
 
+    if collectedDuckie and collectedPail and collectedSoap:
+        screen.blit(pygame.image.load("images/textContainer.jpeg").convert(), (15, 510))
+        text3 = font.render("GAME WON", True, (0, 0, 0))
+        screen.blit(text3, (40, 514))
+        time.sleep(300)
+        run = False
+
     timer -= 1
-    if currentWorld >= 0:
-        # REPLACE WITH TIMER BOX
+    if currentWorld > 0:
         screen.blit(pygame.image.load("images/timer.jpg").convert(), (15, 10))
         time = font.render(str(timer / 60)[0:4], True, (0, 0, 0))
         screen.blit(time, (50, 15))
+        if currentWorld == 1:
+            entityList.add(Thinker(0, "duckie", background_width, background_height))
+        elif currentWorld == 2:
+            entityList.add(Thinker(0, "soap", background_width, background_height))
+        elif currentWorld == 3:
+            entityList.add(Thinker(0, "pail", background_width, background_height))
         if timer < 0 and timer > -60:
             currentWorld = -1
             currentScene = backScene(currentScene)
@@ -191,10 +211,18 @@ while run:
                         for entity in entityList.sprites():
                             entity.isTalking = False
                             if entity != player:
-                                if entity.isThinking:
-                                    x, y = entity.getPosition()
-                                    effectsList.add(ThoughtBubble(x, y))
-                                    entity.isThinking = False
+                                if entity.type == ("plant" or "rat", "frog"):
+                                    if entity.isThinking:
+                                        x, y = entity.getPosition()
+                                        effectsList.add(ThoughtBubble(x, y))
+                                        entity.isThinking = False
+                                else:
+                                    if entity.type == "pail":
+                                        collectedPail = True
+                                    elif entity.type == "soap":
+                                        collectedSoap = True
+                                    elif entity.type == "duckie":
+                                        collectedDuckie = True
                         isTalking = False
                         # pygame.time.delay(10000)
                         bubbleCounter = 120

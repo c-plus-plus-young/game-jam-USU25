@@ -1,5 +1,4 @@
 import pygame
-import random
 
 # Thinker class
 class Thinker(pygame.sprite.Sprite):
@@ -14,6 +13,13 @@ class Thinker(pygame.sprite.Sprite):
         self.currentFrame = 0
         self.backgroundNum = backgroundNum
         self.dialogue = []
+        self.type = type
+        self.collected = False
+        #
+        # def update():
+        #     if self.collected == True:
+        #         self.Rec.
+
 
         # Frog NPC
         if type == "frog":
@@ -71,6 +77,35 @@ class Thinker(pygame.sprite.Sprite):
 
             # Create dialogue for NPC
             self.dialogue = ["Hello I am a plant", "Plant noise", "Silly plant thing"]
+
+        elif type == "soap":
+            # Set initial position of NPC
+            self.x = 830
+            self.y = 200
+            img = pygame.image.load("images/soap.png").convert_alpha()
+            self.idleImages.append(img)
+            self.talkingImages.append(img)
+            self.dialogue = ["COLLECTED SOAP"]
+            self.isThinking = False
+        elif type == "pail":
+            # Set initial position of NPC
+            self.x = 830
+            self.y = 200
+            img = pygame.image.load("images/pail.png").convert_alpha()
+            self.idleImages.append(img)
+            self.talkingImages.append(img)
+            self.dialogue = ["COLLECTED PAIL"]
+            self.isThinking = False
+        elif type == "duckie":
+            # Set initial position of NPC
+            self.x = 830
+            self.y = 200
+            img = pygame.image.load("images/duckie.png").convert_alpha()
+            self.idleImages.append(img)
+            self.talkingImages.append(img)
+            self.dialogue = ["COLLECTED RUBBER DUCK"]
+            self.isThinking = False
+
 
         self.image = self.idleImages[0]
         self.rect = self.image.get_rect(center=(self.x, self.y))
