@@ -1,6 +1,6 @@
 import pygame
 from text import advanceableText
-from music import playMusic
+from music import playMusic, playSound
 from scene import Scene
 from Thinker import Thinker
 from Player import Player
