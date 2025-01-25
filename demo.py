@@ -42,16 +42,20 @@ class Player(pygame.sprite.Sprite):
 class Thinker(pygame.sprite.Sprite):
     def __init__(self, backgroundWidth = 50, backgroundHeight = 50):
         pygame.sprite.Sprite.__init__(self)
-        img = pygame.image.load(r'images/player_image.png').convert_alpha()
-        img = pygame.transform.scale(img, (50, 50))  # Resize player image to 50x50
-        self.image = img
-        self.x = random.randint(0, backgroundWidth)
-        self.y = random.randint(0 ,backgroundHeight)
+        self.idleImages = []
+        self.talkingImages = []
+        for i in range(1, 3):
+            img = pygame.image.load(r'images/frog' + str(i) + '.png').convert_alpha()
+            img = pygame.transform.scale(img, (100, 100))
+            self.idleImages.append(img)
+        for i in range(2, 4):
+            img = pygame.image.load(r'images/frog' + str(i) + '.png').convert_alpha()
+            img = pygame.transform.scale(img, (100, 100))
+            self.talkingImages.append(img)
+        self.image = self.idleImages[0]
+        self.x = 1000
+        self.y = 1000
         self.rect = self.image.get_rect(center=(self.x, self.y))
-
-    def move(self, x_speed, y_speed):
-        # The player stays in place, so no movement is needed
-        pass
 
     def getPosition(self):
         return self.x, self.y
@@ -135,7 +139,11 @@ while run:
     # sprites
     entityList.update()
     entityList.draw(screen)
-    
+
+    if animating // 15 >= len(player.northImages):
+        animating = 0
+
+    thinker.image = thinker.idleImages[animating // 15]
 
     # event handling
     for event in pygame.event.get():
@@ -148,6 +156,9 @@ while run:
         #Player Movement:
         elif event.type == pygame.KEYDOWN:
             if event.key == pygame.K_SPACE and pygame.sprite.collide_rect(thinker, player):
+                thinker.image = thinker.talkingImages[animating // 15]
+                frogText = ["hello I am a frog", "blah blah blah", "i'm teleporting you now"]
+                advanceableText(frogText, screen)
                 currentScene = nextScene()
             if event.key == pygame.K_w:
                 north = True
@@ -175,22 +186,19 @@ while run:
         elif event.type == SCENE_CHANGE_EVENT:
             gameMap = event.mapData
 
-    if animating // 10 >= len(player.northImages):
-        animating = 0
-
     # background scrolling logic
     if north and currentScene.y < 0:
         currentScene.y += yVelocity
-        player.image = player.northImages[animating // 10]
+        player.image = player.northImages[animating // 15]
     if south and currentScene.y > -(background_height - SCREEN_HEIGHT):  # prevent scrolling past the bottom edge
         currentScene.y -= yVelocity
-        player.image = player.southImages[animating // 10]
+        player.image = player.southImages[animating // 15]
     if east and currentScene.x > -(background_width - SCREEN_WIDTH):
         currentScene.x -= xVelocity
-        player.image = player.eastImages[animating // 10]
+        player.image = player.eastImages[animating // 15]
     if west and currentScene.x < 0:
         currentScene.x += xVelocity
-        player.image = player.westImages[animating // 10]
+        player.image = player.westImages[animating // 15]
 
     # update the display
     pygame.display.flip()
