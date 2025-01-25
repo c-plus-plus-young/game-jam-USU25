@@ -61,7 +61,7 @@ def nextScene():
     playMusic("music4.mp3")
 
     saveScene()
-    background = pygame.image.load(backgrounds[currentWorld]).convert()
+    background = pygame.image.load(backgrounds[futureWorld]).convert()
     scene = Scene(background=background)
     effectsList.empty()
     return scene
@@ -102,7 +102,8 @@ for i in range(4):
             print(entity.backgroundNum)
 bubbleCounter = -60
 timer = 6000
-currentWorld = 0
+futureWorld = -1
+currentWorld = -1
 
 # Main loop=======================================================
 run = True
@@ -119,14 +120,18 @@ while run:
     entityList.draw(screen)
 
     timer -= 1
-    if currentWorld != 0:
+    if currentWorld >= 0:
+        # REPLACE WITH TIMER BOX
+        screen.blit(pygame.image.load("images/textContainer.jpeg").convert(), (15, 10))
         time = font.render(str(timer / 60)[0:4], True, (0, 0, 0))
         screen.blit(time, (15, 15))
+        print(currentWorld)
 
     bubbleCounter -= 1
     if bubbleCounter == 0:
         currentScene = nextScene()
         background_width, background_height = currentScene.background.get_size()
+        currentWorld = futureWorld
 
     if len(effectsList) > 0:
         effectsList.draw(screen)
@@ -169,7 +174,7 @@ while run:
                                 isTalking = True
                                 # x,y = entity.getPosition()
                                 # effectsList.add(ThoughtBubble(x,y))
-                                currentWorld = entity.backgroundNum
+                                futureWorld = entity.backgroundNum
                                 textItems = ["hello I am a frog", "blah blah blah", "i'm teleporting you now"]
                 else:
                     textItems = textItems[1:]
