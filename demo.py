@@ -43,7 +43,25 @@ def saveScene():
     scene = Scene(currentScene.x, currentScene.y, currentScene.background)
     scenes.append(scene)
 
+def fade_effect(fade_out=True):
+    fade_surface = pygame.Surface((SCREEN_WIDTH, SCREEN_HEIGHT))
+    fade_surface.fill((0, 0, 0))  # Black overlay
+
+    for alpha in range(0, 255, 10) if fade_out else range(255, -1, -10):
+        fade_surface.set_alpha(alpha)
+        screen.blit(currentScene.background, (currentScene.x, currentScene.y))  # Draw current background
+        entityList.update()
+        entityList.draw(screen)
+        if len(effectsList) > 0:
+            effectsList.draw(screen)
+        screen.blit(fade_surface, (0, 0))
+        pygame.display.update()
+        pygame.time.delay(30)
+
+
 def nextScene():
+    fade_effect(fade_out=True)
+
     saveScene()
     background = pygame.image.load(backgrounds[random.randint(0,4)]).convert()
     scene = Scene(background=background)
@@ -52,6 +70,7 @@ def nextScene():
 
 <<<<<<< Updated upstream
 def backScene(currentScene):
+    fade_effect(fade_out=True)
     if len(scenes) > 0:
         return scenes.pop()
     else:
