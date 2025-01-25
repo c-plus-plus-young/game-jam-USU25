@@ -163,7 +163,7 @@ while run:
         elif currentWorld == 3:
             entityList.add(Thinker(0, "pail", background_width, background_height))
             entityList.add(Thinker(0, "shovel", background_width, background_height))
-            entityList.add(Thinker(0, "hoe", background_width, background_height))
+            entityList.add(Thinker(0, "rake", background_width, background_height))
             entityList.add(Thinker(0, "worm", background_width, background_height))
         if timer < 0 and timer > -60:
             currentWorld = -1
@@ -225,7 +225,7 @@ while run:
                 else:
                     textItems = textItems[1:]
                     if len(textItems) == 0:
-                        if (entity1.type == ("rat" or "frog" or "plant")):
+                        if entity1.type == "rat" or entity1.type == "frog" or entity1.type == "plant":
                             x, y = entity1.getPosition()
                             effectsList.add(ThoughtBubble(x, y))
                             playSound("flowbubble.wav")
