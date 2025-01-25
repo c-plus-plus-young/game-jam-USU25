@@ -102,14 +102,14 @@ while run:
         elif event.type == pygame.USEREVENT:
             screen.fill((100, 100, 100))
 
-        #Player Movement:
+        # Player Movement:
         elif event.type == pygame.KEYDOWN:
             if event.key == pygame.K_SPACE and pygame.sprite.collide_rect(thinker, player):
                 if thinker.isTalking:
                     textItems = textItems[0:]
-                    if len(textItems) == 0:
+                    if len(textItems) == 1:
                         thinker.isTalking = False
-                        # INSERT TELEPORT CODE HERE
+                        currentScene = nextScene()
                 else:
                     thinker.isTalking = True
                     textItems = ["", "hello I am a frog", "blah blah blah", "i'm teleporting you now"]
@@ -161,7 +161,7 @@ while run:
     clock.tick(60)
     animating = animating + 1
 
-    #Update entity positions
+    # Update entity positions
     for entity in entityList.sprites():
         if isinstance(entity, Thinker):
             x, y = entity.getPosition()
