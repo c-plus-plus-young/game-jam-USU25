@@ -69,6 +69,8 @@ def nextScene():
 def backScene(currentScene):
     fade_effect(fade_out=True)
     if len(scenes) > 0:
+        if len(scenes) == 1:
+            playMusic("music5.mp3")
         return scenes.pop()
     else:
         return currentScene
@@ -127,8 +129,6 @@ while run:
     if (len(textItems) > 1):
         text2 = font.render(textItems[1], True, (0, 0, 0))
         screen.blit(text2, (40, 540))
-
-
 
 
     # event handling
