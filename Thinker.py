@@ -47,5 +47,8 @@ class Thinker(pygame.sprite.Sprite):
                 self.currentFrame = 0
             
             # Update the image to the new frame
-            self.image = self.idleImages[self.currentFrame]
+            if self.isTalking:
+                self.image = self.talkingImagesImages[self.currentFrame]
+            else:
+                self.image = self.idleImages[self.currentFrame]
             self.rect = self.image.get_rect(center=self.rect.center)  # Keep the sprite's position centered
