@@ -24,7 +24,7 @@ screen = pygame.display.set_mode((SCREEN_WIDTH, SCREEN_HEIGHT))
 background = pygame.image.load('images/hubBG.png').convert()
 background_width, background_height = background.get_size()
 currentScene = Scene(background=background)
-backgrounds = ['images/background1.jpg','images/background2.jpg','images/background3.jpg','images/background4.jpg', 'images/background5.jpg']
+backgrounds = ['images/bedroomBG.png','images/background2.jpg','images/background3.jpg','images/background4.jpg', 'images/background5.jpg']
 
 player = Player(SCREEN_WIDTH, SCREEN_HEIGHT)
 
