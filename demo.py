@@ -1,7 +1,6 @@
-from idlelib.macosx import isCocoaTk
+
 
 import pygame
-from text import advanceableText
 from music import playMusic, playSound
 from scene import Scene
 from Thinker import Thinker
