@@ -1,9 +1,8 @@
 import pygame
+from text import printText
+from music import playMusic
 
 pygame.init()
-pygame.joystick.init()
-joysticks = [pygame.joystick.Joystick(x) for x in range(pygame.joystick.get_count())]
-print(joysticks)
 
 # window dimensions
 SCREEN_WIDTH = 800
