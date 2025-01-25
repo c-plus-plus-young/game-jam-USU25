@@ -7,6 +7,11 @@ from Player import Player
 import random
 pygame.init()
 
+# font init
+pygame.font.init()
+font = pygame.font.Font("fonts/Modak-Regular.ttf", 30)
+textItems = []
+
 # window dimensions
 SCREEN_WIDTH = 800
 SCREEN_HEIGHT = 600
@@ -73,7 +78,14 @@ while run:
     entityList.update()
     entityList.draw(screen)
 
-    # Handle animation
+    if (len(textItems) > 0):
+        pygame.draw.rect(screen, (0, 255, 0), pygame.Rect(15, 510, 770, 80))
+        text1 = font.render(textItems[0], True, (255, 255, 255))
+        screen.blit(text1, (25, 515))
+    if (len(textItems) > 1):
+        text2 = font.render(textItems[1], True, (255, 255, 255))
+        screen.blit(text2, (25, 550))
+
     if animating // 15 >= len(player.northImages):
         animating = 0
 
@@ -102,6 +114,11 @@ while run:
                 west = True
             if event.key == pygame.K_d:
                 east = True
+            if event.key == pygame.K_k:
+                textItems = ["word1", "word2", "word3"]
+            if event.key == pygame.K_SPACE:
+                textItems = textItems[1:]
+                print(textItems)
         elif event.type == pygame.KEYUP:
 
             if event.key == pygame.K_w:
