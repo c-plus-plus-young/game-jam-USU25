@@ -17,19 +17,19 @@ class Player(pygame.sprite.Sprite):
         # Add images to North, South, East and West sprite sheets
         for i in range(1, 3):
             img = pygame.image.load(r'images/wizard' + str(i) + '.png').convert_alpha()
-            img = pygame.transform.scale(img, (150, 150))
+            img = pygame.transform.scale(img, (100, 100))
             self.southImages.append(img)
         for i in range(3, 5):
             img = pygame.image.load(r'images/wizard' + str(i) + '.png').convert_alpha()
-            img = pygame.transform.scale(img, (150, 150))
+            img = pygame.transform.scale(img, (100, 100))
             self.eastImages.append(img)
         for i in range(5, 7):
             img = pygame.image.load(r'images/wizard' + str(i) + '.png').convert_alpha()
-            img = pygame.transform.scale(img, (150, 150))
+            img = pygame.transform.scale(img, (100, 100))
             self.westImages.append(img)
         for i in range(7, 9):
             img = pygame.image.load(r'images/wizard' + str(i) + '.png').convert_alpha()
-            img = pygame.transform.scale(img, (150, 150))
+            img = pygame.transform.scale(img, (100, 100))
             self.northImages.append(img)
         self.image = self.northImages[0]
         self.rect = self.image.get_rect(center=(SCREEN_WIDTH // 2, SCREEN_HEIGHT // 2))  # Center player on screen
@@ -102,9 +102,9 @@ west = False
 velocity = 1
 
 #Custom Events
-MAP_EVENT = pygame.USEREVENT + 1
-map_data_red = { "mapData" : (255,0,0)}
-mapChangeRed = pygame.event.Event(MAP_EVENT, **map_data_red)
+SCENE_CHANGE_EVENT = pygame.USEREVENT + 1
+sceneData = { "scene" : nextScene()}
+sceneChange = pygame.event.Event(SCENE_CHANGE_EVENT, **sceneData)
 
 
 #map data:
@@ -147,17 +147,15 @@ while run:
 
         #Player Movement:
         elif event.type == pygame.KEYDOWN:
+            if event.key == pygame.K_SPACE and pygame.sprite.collide_rect(thinker, player):
+                currentScene = nextScene()
             if event.key == pygame.K_w:
-                
                 north = True
             if event.key == pygame.K_s:
-                
                 south = True
             if event.key == pygame.K_a:
-                
                 west = True
             if event.key == pygame.K_d:
-            
                 east = True
         elif event.type == pygame.KEYUP:
         
@@ -174,7 +172,7 @@ while run:
             if event.key == pygame.K_n:
                 currentScene = nextScene()
 
-        elif event.type == MAP_EVENT:
+        elif event.type == SCENE_CHANGE_EVENT:
             gameMap = event.mapData
 
     if animating // 10 >= len(player.northImages):
