@@ -110,7 +110,7 @@ for i in range(3):
     entityList.add(Thinker((i + 1), thinkerList[i], background_width, background_height))
 
 bubbleCounter = -60
-timerLength = 300
+timerLength = 900
 timer = timerLength
 futureWorld = -1
 currentWorld = -1
@@ -208,6 +208,7 @@ while run:
                                 entity.isTalking = True
                                 entity.isThinking = True
                                 isTalking = True
+                                entity1 = entity
                                 # x,y = entity.getPosition()
                                 # effectsList.add(ThoughtBubble(x,y))
                                 futureWorld = entity.backgroundNum
@@ -215,21 +216,24 @@ while run:
                 else:
                     textItems = textItems[1:]
                     if len(textItems) == 0:
+                        x, y = entity1.getPosition()
+                        effectsList.add(ThoughtBubble(x, y))
+                        entity.isThinking = False
                         for entity in entityList.sprites():
                             entity.isTalking = False
+                            # if entity != player:
+                            #     if entity.type == ("plant" or "rat" or "frog"):
+                                    # if entity.isThinking:
+                                    #     x, y = entity.getPosition()
+                                    #     effectsList.add(ThoughtBubble(x, y))
+                                    #     entity.isThinking = False
                             if entity != player:
-                                if entity.type == ("plant" or "rat", "frog"):
-                                    if entity.isThinking:
-                                        x, y = entity.getPosition()
-                                        effectsList.add(ThoughtBubble(x, y))
-                                        entity.isThinking = False
-                                else:
-                                    if entity.type == "pail":
-                                        collectedPail = True
-                                    elif entity.type == "soap":
-                                        collectedSoap = True
-                                    elif entity.type == "duckie":
-                                        collectedDuckie = True
+                                if entity.type == "pail":
+                                    collectedPail = True
+                                elif entity.type == "soap":
+                                    collectedSoap = True
+                                elif entity.type == "duckie":
+                                    collectedDuckie = True
                         isTalking = False
                         # pygame.time.delay(10000)
                         bubbleCounter = 120

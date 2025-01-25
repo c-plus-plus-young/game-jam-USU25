@@ -38,7 +38,7 @@ class Thinker(pygame.sprite.Sprite):
                 self.talkingImages.append(img)
 
             # Create dialogue for NPC
-            self.dialogue = ["Hello I am a frog", "Ribbit", "Silly frog thing"]
+            self.dialogue = ["Hello I'm Ri, short for Ribbit'", "I love taking baths with my favorite toy, ", "but I can't remember what it is.", "Can you help me remember what it was?"]
 
         # Rat NPC
         elif type == "rat":
@@ -57,7 +57,7 @@ class Thinker(pygame.sprite.Sprite):
                 self.talkingImages.append(img)
 
             # Create dialogue for NPC
-            self.dialogue = ["Hello I am a rat", "Squeak", "Silly rat thing"]
+            self.dialogue = ["Hello I am a Gordon Ratsmey", "*Squeak*", "My kitchen is a mess, but I can't remember", "what I need to clean it.", "Can you help me remember?"]
 
         # Plant NPC
         elif type == "plant":
@@ -76,7 +76,7 @@ class Thinker(pygame.sprite.Sprite):
                 self.talkingImages.append(img)
 
             # Create dialogue for NPC
-            self.dialogue = ["Hello I am a plant", "Plant noise", "Silly plant thing"]
+            self.dialogue = ["Hello, I'm Weedo the plant.", "I want to grow big and tall,", "but I can't seem to remember what I", "need to do so.", "Can you help me wrack my brain?"]
 
         elif type == "soap":
             # Set initial position of NPC
