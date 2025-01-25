@@ -152,10 +152,19 @@ while run:
         screen.blit(currTime, (50, 15))
         if currentWorld == 1:
             entityList.add(Thinker(0, "duckie", background_width, background_height))
+            entityList.add(Thinker(0, "ball", background_width, background_height))
+            entityList.add(Thinker(0, "car", background_width, background_height))
+            entityList.add(Thinker(0, "rubix", background_width, background_height))
         elif currentWorld == 2:
             entityList.add(Thinker(0, "soap", background_width, background_height))
+            entityList.add(Thinker(0, "knife", background_width, background_height))
+            entityList.add(Thinker(0, "pan", background_width, background_height))
+            entityList.add(Thinker(0, "flour", background_width, background_height))
         elif currentWorld == 3:
             entityList.add(Thinker(0, "pail", background_width, background_height))
+            entityList.add(Thinker(0, "shovel", background_width, background_height))
+            entityList.add(Thinker(0, "hoe", background_width, background_height))
+            entityList.add(Thinker(0, "worm", background_width, background_height))
         if timer < 0 and timer > -60:
             currentWorld = -1
             currentScene = backScene(currentScene)

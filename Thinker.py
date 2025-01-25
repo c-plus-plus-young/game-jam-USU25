@@ -105,6 +105,34 @@ class Thinker(pygame.sprite.Sprite):
             self.talkingImages.append(img)
             self.dialogue = ["COLLECTED RUBBER DUCK"]
             self.isThinking = False
+        elif type == "ball":
+            # Set initial position of NPC
+            self.x = 830
+            self.y = 200
+            img = pygame.image.load("images/duckie.png").convert_alpha()
+            self.idleImages.append(img)
+            self.talkingImages.append(img)
+            self.dialogue = ["Hmm.. That's not quite right"]
+            self.isThinking = False
+        elif type == "car":
+            # Set initial position of NPC
+            self.x = 830
+            self.y = 200
+            img = pygame.image.load("images/duckie.png").convert_alpha()
+            self.idleImages.append(img)
+            self.talkingImages.append(img)
+            self.dialogue = ["Hmm.. That's not quite right"]
+            self.isThinking = False
+        elif type == "rubix":
+            # Set initial position of NPC
+            self.x = 830
+            self.y = 200
+            img = pygame.image.load("images/duckie.png").convert_alpha()
+            self.idleImages.append(img)
+            self.talkingImages.append(img)
+            self.dialogue = ["Hmm.. That's not quite right"]
+            self.isThinking = False
+
 
 
         self.image = self.idleImages[0]
