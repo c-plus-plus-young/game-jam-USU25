@@ -55,7 +55,7 @@ def fade_effect(fade_out=True):
         pygame.time.delay(30)
 
 
-def nextScene():
+def nextScene(currentWorld):
     fade_effect(fade_out=True)
     pygame.mixer_music.stop()
     playMusic("music4.mp3")
@@ -65,6 +65,23 @@ def nextScene():
     scene = Scene(background=background)
     effectsList.empty()
     entityList.empty()
+
+    if currentWorld == 1:
+        entityList.add(Thinker(0, "duckie", background_width, background_height))
+        entityList.add(Thinker(0, "ball", background_width, background_height))
+        entityList.add(Thinker(0, "car", background_width, background_height))
+        entityList.add(Thinker(0, "rubix", background_width, background_height))
+    elif currentWorld == 2:
+        entityList.add(Thinker(0, "soap", background_width, background_height))
+        entityList.add(Thinker(0, "knife", background_width, background_height))
+        entityList.add(Thinker(0, "pan", background_width, background_height))
+        entityList.add(Thinker(0, "flour", background_width, background_height))
+    elif currentWorld == 3:
+        entityList.add(Thinker(0, "pail", background_width, background_height))
+        entityList.add(Thinker(0, "shovel", background_width, background_height))
+        entityList.add(Thinker(0, "rake", background_width, background_height))
+        entityList.add(Thinker(0, "worm", background_width, background_height))
+
     entityList.add(player)
     if futureWorld == 0:
         playMusic("music5.mp3")
@@ -150,21 +167,6 @@ while run:
         screen.blit(pygame.image.load("images/timer.jpg").convert(), (15, 10))
         currTime = font.render(str(timer / 60)[0:4], True, (0, 0, 0))
         screen.blit(currTime, (50, 15))
-        if currentWorld == 1:
-            entityList.add(Thinker(0, "duckie", background_width, background_height))
-            entityList.add(Thinker(0, "ball", background_width, background_height))
-            entityList.add(Thinker(0, "car", background_width, background_height))
-            entityList.add(Thinker(0, "rubix", background_width, background_height))
-        elif currentWorld == 2:
-            entityList.add(Thinker(0, "soap", background_width, background_height))
-            entityList.add(Thinker(0, "knife", background_width, background_height))
-            entityList.add(Thinker(0, "pan", background_width, background_height))
-            entityList.add(Thinker(0, "flour", background_width, background_height))
-        elif currentWorld == 3:
-            entityList.add(Thinker(0, "pail", background_width, background_height))
-            entityList.add(Thinker(0, "shovel", background_width, background_height))
-            entityList.add(Thinker(0, "rake", background_width, background_height))
-            entityList.add(Thinker(0, "worm", background_width, background_height))
         if timer < 0 and timer > -60:
             currentWorld = -1
             currentScene = backScene(currentScene)
@@ -173,7 +175,7 @@ while run:
 
     bubbleCounter -= 1
     if bubbleCounter == 0:
-        currentScene = nextScene()
+        currentScene = nextScene(futureWorld)
         background_width, background_height = currentScene.background.get_size()
         currentWorld = futureWorld
         timer = timerLength
