@@ -39,12 +39,11 @@ def nextScene():
     scene = Scene(background=background)
     return scene
 
-def backScene():
-    return scenes.pop()
-
-
-
-
+def backScene(currentScene):
+    if len(scenes) > 0:
+        return scenes.pop()
+    else:
+        return currentScene
 
 clock = pygame.time.Clock()
 player = Player(SCREEN_WIDTH, SCREEN_HEIGHT)
@@ -138,7 +137,7 @@ while run:
             if event.key == pygame.K_d:
                 east = False
             if event.key == pygame.K_b:
-                currentScene = backScene()
+                currentScene = backScene(currentScene)
             if event.key == pygame.K_n:
                 currentScene = nextScene()
 
@@ -149,25 +148,25 @@ while run:
         player.north = True
     else:
         player.north = False
-        
+
     if south and currentScene.y > -(background_height - SCREEN_HEIGHT + 250):  # prevent scrolling past the bottom edge
         currentScene.y -= velocity
         player.south = True
     else:
         player.south = False
-        
+
     if east and currentScene.x > -(background_width - SCREEN_WIDTH + 350):
         currentScene.x -= velocity
         player.east = True
     else:
         player.east = False
-        
+
     if west and currentScene.x < 350:
         currentScene.x += velocity
         player.west = True
     else:
         player.west = False
-    
+
 
     # update the display
     pygame.display.flip()
