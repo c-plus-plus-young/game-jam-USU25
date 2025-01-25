@@ -104,7 +104,8 @@ for i in range(3):
     entityList.add(Thinker(i, thinkerList[i], background_width, background_height))
 
 bubbleCounter = -60
-timer = 300
+timerLength = 300
+timer = timerLength
 futureWorld = -1
 currentWorld = -1
 
@@ -125,13 +126,13 @@ while run:
     timer -= 1
     if currentWorld >= 0:
         # REPLACE WITH TIMER BOX
-        screen.blit(pygame.image.load("images/textContainer.jpeg").convert(), (15, 10))
+        screen.blit(pygame.image.load("images/timer.jpg").convert(), (15, 10))
         time = font.render(str(timer / 60)[0:4], True, (0, 0, 0))
-        screen.blit(time, (15, 15))
+        screen.blit(time, (50, 15))
         if timer < 0 and timer > -60:
             currentWorld = -1
             currentScene = backScene(currentScene)
-            timer = 300
+            timer = timerLength
             playSound("bubblepop.mp3")
 
     bubbleCounter -= 1
@@ -139,6 +140,7 @@ while run:
         currentScene = nextScene()
         background_width, background_height = currentScene.background.get_size()
         currentWorld = futureWorld
+        timer = timerLength
 
     if len(effectsList) > 0:
         effectsList.draw(screen)
@@ -210,7 +212,7 @@ while run:
                 east = False
             if event.key == pygame.K_b:
                 currentWorld = -1
-                timer = 300
+                timer = timerLength
                 currentWorld = -1
                 currentScene = backScene(currentScene)
                 playSound("bubblepop.mp3")
