@@ -100,9 +100,8 @@ while run:
         elif event.type == pygame.USEREVENT:
             screen.fill((100, 100, 100))
 
-        #Player Movement:
+        # Player Movement:
         elif event.type == pygame.KEYDOWN:
-
             if event.key == pygame.K_w:
                 north = True
             if event.key == pygame.K_s:
@@ -171,7 +170,7 @@ while run:
     clock.tick(60)
     animating = animating + 1
 
-    #Update entity positions
+    # Update entity positions
     for entity in entityList.sprites():
         if isinstance(entity, Thinker):
             x, y = entity.getPosition()
