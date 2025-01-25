@@ -125,6 +125,7 @@ while run:
                             entity.isTalking = False
                         isTalking = False
                         currentScene = nextScene()
+                        background_width, background_height = currentScene.background.get_size()
 
         elif event.type == pygame.KEYUP:
 
