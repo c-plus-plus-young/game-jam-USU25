@@ -50,7 +50,7 @@ clock = pygame.time.Clock()
 player = Player(SCREEN_WIDTH, SCREEN_HEIGHT)
 
 #player movement
-velocity = 10
+velocity = 5
 north = south = east = west = False
 animating = 0
 
